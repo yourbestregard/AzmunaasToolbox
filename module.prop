@@ -4,4 +4,5 @@ version=v1.0
 versionCode=100
 author=Az-Har Muhamad Nayif (@yourbestregard, @azmunaashome)
 description=Modul KernelSU multifungsi dengan WebUI.
+updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/main/azmunaastoolbox.json?token=GHSAT0AAAAAADFHWCVHR3TCGPS7RI5EWKV22CDXKKA
 minApi=21
