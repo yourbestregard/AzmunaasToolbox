@@ -1,0 +1,214 @@
+body {
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    background-color: #1a1a2e; /* Dark background */
+    color: #e0e0e0; /* Light grey text */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+.container {
+    background-color: #24243e; /* Slightly lighter dark for container */
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.2), 0 0 50px rgba(0, 255, 255, 0.1);
+    padding: 35px;
+    width: 100%;
+    max-width: 650px;
+    box-sizing: border-box;
+    border: 1px solid #00ffff;
+}
+
+h1 {
+    color: #00ffff; /* Cyan glow */
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.8em;
+    font-weight: 700;
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    letter-spacing: 2px;
+}
+
+.info {
+    background-color: #2e305b; /* Darker blue-purple */
+    border-left: 5px solid #8a2be2; /* Blue-violet accent */
+    padding: 20px;
+    margin-bottom: 35px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(138, 43, 226, 0.3);
+}
+
+.info p {
+    margin: 8px 0;
+    font-size: 1em;
+    color: #c0c0c0;
+}
+
+.info a {
+    color: #00ffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.info a:hover {
+    color: #8a2be2;
+    text-decoration: underline;
+}
+
+.telegram-button-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.telegram-button {
+    display: inline-block;
+    background-color: #6c757d; /* Grey */
+    color: white;
+    padding: 10px 25px;
+    border: 1px solid #495057;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(108, 117, 125, 0.3);
+}
+
+.telegram-button:hover {
+    background-color: #5a6268;
+    box-shadow: 0 0 15px rgba(108, 117, 125, 0.5);
+}
+
+h2 {
+    color: #00ffff; /* Cyan glow */
+    border-bottom: 2px solid #8a2be2; /* Blue-violet underline */
+    padding-bottom: 12px;
+    margin-top: 35px;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+.feature-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2e305b; /* Darker blue-purple */
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #4a4d7c;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+.feature-item span {
+    font-size: 1.15em;
+    font-weight: 500;
+    color: #e0e0e0;
+}
+
+/* The switch - adapted for futuristic theme */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 55px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #4a4d7c; /* Off state color */
+    transition: .4s;
+    border-radius: 28px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #c0c0c0; /* Handle color */
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+input:checked + .slider {
+    background-color: #00ffff; /* Cyan for enabled */
+    box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.5), 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #00ffff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(27px);
+    background-color: #ffffff;
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+}
+
+.action-button {
+    background-color: #8a2be2; /* Blue-violet for action */
+    color: white;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+    width: 100%;
+    margin-bottom: 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+}
+
+.action-button:hover {
+    background-color: #9932cc; /* Darker blue-violet on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5), 0 0 30px rgba(138, 43, 226, 0.2);
+}
+
+.action-button:active {
+    transform: translateY(0);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+}
+
+.log-section {
+    margin-top: 35px;
+}
+
+#logOutput {
+    width: 100%;
+    height: 300px;
+    background-color: #1e1e3b; /* Even darker for log area */
+    border: 1px solid #4a4d7c;
+    border-radius: 10px;
+    padding: 18px;
+    font-family: 'Fira Code', 'Consolas', monospace; /* Monospaced font for code/logs */
+    font-size: 0.9em;
+    color: #00ffff; /* Cyan text for logs */
+    resize: vertical;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.1);
+}

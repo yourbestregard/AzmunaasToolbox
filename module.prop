@@ -1,0 +1,7 @@
+id=azmunaas_toolbox
+name=Azmunaa's Toolbox
+version=v1.0
+versionCode=100
+author=Az-Har Muhamad Nayif (@yourbestregard, @azmunaashome)
+description=Modul KernelSU multifungsi dengan WebUI.
+minApi=21
