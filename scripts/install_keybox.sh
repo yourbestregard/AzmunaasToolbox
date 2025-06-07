@@ -5,7 +5,7 @@ MODPATH=/data/adb/modules/azmunaas_toolbox
 KEYBOX_DIR="/data/adb/trickystore"
 KEYBOX_FILE="$KEYBOX_DIR/keybox.xml"
 KEYBOX_BACKUP_FILE="$KEYBOX_DIR/keybox_backup.xml"
-KEYBOX_URL="https://raw.githubusercontent.com/yourbestregard/android_modules/refs/heads/main/azmunaastoolbox/valid.xml"
+KEYBOX_URL="https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/main/valid.xml?token=GHSAT0AAAAAADFHWCVHULYIWA3O6SXNOO522CDWPIA"
 
 log_message() {
     echo "$(date +%Y-%m-%d\ %H:%M:%S) [Keybox] $1"
@@ -26,7 +26,7 @@ if [ -f "$KEYBOX_FILE" ]; then
     fi
 fi
 
-log_message "Mengunduh keybox.xml dari $KEYBOX_URL..."
+log_message "Mengunduh keybox.xml..."
 # Menggunakan curl jika tersedia, jika tidak wget
 if command -v curl >/dev/null 2>&1; then
     curl -sL "$KEYBOX_URL" -o "$KEYBOX_FILE"
@@ -44,6 +44,6 @@ if [ $? -eq 0 ] && [ -f "$KEYBOX_FILE" ] && [ -s "$KEYBOX_FILE" ]; then
 else
     log_message "Error: Gagal mengunduh atau memverifikasi keybox.xml."
     exit 1
-}
+fi
 
 log_message "Instalasi Keybox Valid selesai."

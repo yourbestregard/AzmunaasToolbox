@@ -3,8 +3,8 @@
 
 MODPATH=/data/adb/modules/azmunaas_toolbox
 ORIGINAL_SOUND_PATH="/system/product/media/audio/ui/ChargingStarted.ogg"
-BACKUP_SOUND_PATH="$MODPATH/ChargingStarted_backup.ogg"
-NEW_SOUND_PATH="$MODPATH/sound/new_charging_sound.ogg"
+BACKUP_SOUND_PATH="$MODPATH/sound/backup_ChargingStarted_backup.ogg"
+NEW_SOUND_PATH="$MODPATH/sound/new.ogg"
 
 log_message() {
     echo "$(date +%Y-%m-%d\ %H:%M:%S) [Sound Replace] $1"
@@ -39,7 +39,7 @@ if [ -f "$NEW_SOUND_PATH" ]; then
     fi
     mount -o remount,ro /system
 else
-    log_message "Error: File suara baru ($NEW_SOUND_PATH) tidak ditemukan. Harap letakkan file .ogg Anda di sana setelah instalasi modul."
+    log_message "Error: File suara baru ($NEW_SOUND_PATH) tidak ditemukan. Harap letakkan file new.ogg Anda di sana setelah instalasi modul."
 fi
 
 log_message "Penggantian suara ChargingStarted.ogg selesai."

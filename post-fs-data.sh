@@ -42,12 +42,50 @@ if [ -f "$MODPATH/flags/xiaomi_15_spoof_enabled" ]; then
     log_message "  -> Fitur: Spoof Xiaomi 15 diaktifkan. Menambahkan properti spoofing..."
     BUILD_PROP_CONTENT="${BUILD_PROP_CONTENT}
 # Properti untuk Spoof Xiaomi 15
-ro.product.manufacturer=Xiaomi
-ro.product.model=Xiaomi 15
-ro.product.device=xiaomi15
-ro.product.brand=Xiaomi
-ro.product.name=xiaomi15
-ro.build.product=xiaomi15
+ro.product.brand=xiaomi
+ro.product.manufacturer=xiaomi
+ro.product.device=dada
+ro.product.model=24129PN74G
+ro.product.marketname=Xiaomi 15
+
+# Partisi: odm
+ro.product.odm.brand=xiaomi
+ro.product.odm.manufacturer=xiaomi
+ro.product.odm.device=dada
+ro.product.odm.model=24129PN74G
+ro.product.odm.marketname=Xiaomi 15
+
+# Partisi: product
+ro.product.product.brand=xiaomi
+ro.product.product.manufacturer=xiaomi
+ro.product.product.device=dada
+ro.product.product.model=24129PN74G
+ro.product.product.marketname=Xiaomi 15
+
+# Partisi: system
+ro.product.system.brand=xiaomi
+ro.product.system.manufacturer=xiaomi
+ro.product.system.device=dada
+ro.product.system.model=24129PN74G
+ro.product.system.marketname=Xiaomi 15
+
+# Partisi: system_ext
+ro.product.system_ext.brand=xiaomi
+ro.product.system_ext.manufacturer=xiaomi
+ro.product.system_ext.device=dada
+ro.product.system_ext.model=24129PN74G
+ro.product.system_ext.marketname=Xiaomi 15
+
+# Partisi: vendor
+ro.product.vendor.brand=xiaomi
+ro.product.vendor.manufacturer=xiaomi
+ro.product.vendor.device=dada
+ro.product.vendor.model=24129PN74G
+ro.product.vendor.marketname=Xiaomi 15
+
+# Chipset & Fitur Tambahan
+ro.soc.model=SM8750
+sys.fps_unlock_allowed=120
 "
 fi
 
@@ -63,10 +101,12 @@ ro.system.build.type=user
     # Catatan: Jika Anda juga perlu memodifikasi ro.build.fingerprint atau ro.build.description
     # yang mungkin mengandung "userdebug", Anda perlu membaca build.prop asli, memodifikasinya
     # dengan sed, lalu menambahkannya ke BUILD_PROP_CONTENT. Contoh:
-    # FINGERPRINT_MOD=$(grep "^ro.build.fingerprint=" /system/build.prop 2>/dev/null | sed 's/userdebug/user/g')
-    # if [ -n "$FINGERPRINT_MOD" ]; then BUILD_PROP_CONTENT="${BUILD_PROP_CONTENT}\n$FINGERPRINT_MOD"; fi
-    # DESCRIPTION_MOD=$(grep "^ro.build.description=" /system/build.prop 2>/dev/null | sed 's/userdebug/user/g')
-    # if [ -n "$DESCRIPTION_MOD" ]; then BUILD_PROP_CONTENT="${BUILD_PROP_CONTENT}\n$DESCRIPTION_MOD"; fi
+    FINGERPRINT_MOD=$(grep "^ro.build.fingerprint=" /system/build.prop 2>/dev/null | sed 's/userdebug/user/g')
+    if [ -n "$FINGERPRINT_MOD" ]; then BUILD_PROP_CONTENT="${BUILD_PROP_CONTENT}\n$FINGERPRINT_MOD"; fi
+    FINGERPRINT_MOD=$(grep "^ro.system.fingerprint=" /system/build.prop 2>/dev/null | sed 's/userdebug/user/g')
+    if [ -n "$FINGERPRINT_MOD" ]; then BUILD_PROP_CONTENT="${BUILD_PROP_CONTENT}\n$FINGERPRINT_MOD"; fi
+    DESCRIPTION_MOD=$(grep "^ro.build.description=" /system/build.prop 2>/dev/null | sed 's/userdebug/user/g')
+    if [ -n "$DESCRIPTION_MOD" ]; then BUILD_PROP_CONTENT="${BUILD_PROP_CONTENT}\n$DESCRIPTION_MOD"; fi
 fi
 
 # Langkah 4: Tulis konten build.prop yang telah disusun ke file overlay.
@@ -96,8 +136,8 @@ if [ -f "$MODPATH/flags/pif_spoof_disable_enabled" ]; then
 else
     log_message "  -> Fitur: Mematikan Spoof PIF bawaan ROM dinonaktifkan."
     # Opsional: Jika fitur dimatikan, Anda mungkin ingin menghapus properti ini.
-    # setprop persist.sys.pihooks.disable.gms_props "" # Mengatur ke string kosong untuk menghapus
-    # setprop persist.sys.pihooks.disable.gms_key_attestation_block ""
+    setprop persist.sys.pihooks.disable.gms_props "" # Mengatur ke string kosong untuk menghapus
+    setprop persist.sys.pihooks.disable.gms_key_attestation_block ""
 fi
 
 log_message "Eksekusi post-fs-data.sh selesai."
