@@ -23,24 +23,19 @@ SCRIPTS_DIR="$MODPATH/scripts"
 LOG_FILE="$MODPATH/executor_log.txt"
 
 # ================================================
-#  Pengalihan Output dan Fungsi Logging
+#  Fungsi Logging yang Kompatibel dengan sh
 # ================================================
 
-# Mengalihkan semua output (stdout dan stderr) dari skrip ini ke file log DAN ke konsol.
-# `exec > >(tee -a "$LOG_FILE") 2>&1`:
-#   - `exec >(...)`: Mengganti stdout shell saat ini dengan proses di dalam kurung.
-#   - `tee -a "$LOG_FILE"`: Perintah `tee` akan membaca dari input standar dan menulisnya
-#     ke output standar (konsol) dan juga ke file (`-a` untuk append, bukan menimpa).
-#   - `2>&1`: Mengalihkan stderr (file descriptor 2) ke stdout (file descriptor 1).
-# Ini memastikan bahwa semua pesan log dari skrip ini akan disimpan ke `$LOG_FILE`
-# dan juga dapat ditangkap oleh `module.execute()` di WebUI.
-exec > >(tee -a "$LOG_FILE") 2>&1
+# Memastikan direktori flags ada sebelum mencoba menulis log.
+mkdir -p "$FLAGS_DIR"
 
 # Fungsi `log_message` digunakan untuk mencatat pesan status.
-# Karena `exec` di atas, pesan ini akan otomatis masuk ke file log dan konsol.
+# Pesan akan dicetak ke stdout (agar bisa ditangkap WebUI) dan juga ditulis ke file log.
 log_message() {
-    # Menggunakan `echo` dengan format waktu dan tag spesifik untuk `executor`.
-    echo "$(date +%Y-%m-%d\ %H:%M:%S) [EXECUTOR] $1"
+    TIMESTAMP=$(date +%Y-%m-%d\ %H:%M:%S)
+    MESSAGE="$1"
+    echo "$TIMESTAMP [EXECUTOR] $MESSAGE"
+    echo "$TIMESTAMP [EXECUTOR] $MESSAGE" >> "$LOG_FILE" 2>&1
 }
 
 # ================================================
