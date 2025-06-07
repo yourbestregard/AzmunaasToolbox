@@ -1,8 +1,35 @@
+# module.prop
+#
+# File `module.prop` adalah file metadata penting untuk modul Magisk atau KernelSU.
+# File ini berisi informasi dasar tentang modul yang ditampilkan di manajer modul
+# dan digunakan oleh sistem untuk mengidentifikasi dan mengelola modul.
+
+# id: ID unik untuk modul. Ini harus berupa string huruf kecil tanpa spasi atau karakter khusus.
+#     Disarankan untuk menggunakan format kebalikan domain (misalnya, com.developer.module).
 id=azmunaas_toolbox
+
+# name: Nama yang dapat dibaca manusia untuk modul. Ini akan ditampilkan di daftar modul.
 name=Azmunaa's Toolbox
+
+# version: Nomor versi modul dalam format yang dapat dibaca manusia (misal: v1.0, 1.2.3).
 version=v1.0
+
+# versionCode: Nomor versi internal modul. Ini harus berupa integer (bilangan bulat).
+#              Digunakan oleh manajer modul untuk menentukan apakah ada pembaruan (versiCode yang lebih tinggi berarti pembaruan).
 versionCode=100
+
+# author: Nama atau alias penulis modul. Ini akan ditampilkan di informasi modul.
 author=Az-Har Muhamad Nayif (@yourbestregard, @azmunaashome)
-description=Modul KernelSU multifungsi dengan WebUI.
-updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/main/azmunaastoolbox.json?token=GHSAT0AAAAAADFHWCVHR3TCGPS7RI5EWKV22CDXKKA
+
+# description: Deskripsi singkat tentang fungsi modul. Ini akan ditampilkan di detail modul.
+description=Modul KernelSU multifungsi dengan WebUI untuk mengelola fitur spoofing dan menjalankan skrip sistem.
+
+# updateJson: (Opsional) URL ke file JSON yang berisi informasi pembaruan untuk modul.
+#             Manajer modul dapat menggunakan ini untuk memeriksa dan mengunduh pembaruan secara otomatis.
+#             Pastikan URL ini mengarah ke file JSON yang valid dan selalu diperbarui.
+updateJson=https://raw.githubusercontent.com/yourbestregard/yourbestregard/main/azmunaastoolbox.json
+
+# minApi: (Opsional) Versi API Android minimum yang didukung oleh modul ini (SDK level).
+#         Modul tidak akan diinstal pada perangkat dengan versi Android di bawah ini.
+#         Contoh: 21 untuk Android 5.0 Lollipop, 33 untuk Android 13.
 minApi=21

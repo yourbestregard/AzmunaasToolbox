@@ -1,60 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Deklarasi set karakter untuk dokumen HTML -->
     <meta charset="UTF-8">
+    <!-- Konfigurasi viewport untuk memastikan responsivitas di berbagai perangkat -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Judul halaman yang akan muncul di tab browser atau bar judul aplikasi -->
     <title>Azmunaa's Toolbox</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Mengimpor stylesheet WebUI X dari CDN (Content Delivery Network).
+         Ini menyediakan gaya visual dasar dan komponen UI untuk aplikasi WebUI X. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/webui-x@latest/dist/webui.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Azmunaa's Toolbox</h1>
-        <div class="info">
-            <p>Oleh: Az-Har Muhamad Nayif & RaihanZxx</p>
-            <p>Kontak: <a href="https://t.me/yourbestregard" target="_blank">@yourbestregard</a> & <a href="https://t.me/Hansobored" target="_blank">@Hansobored</a></p>
-            <div class="telegram-button-container">
-                <a href="https://t.me/+5_tlSzUpZeVhZWM1" target="_blank" class="telegram-button">Gabung Grup Telegram</a>
-            </div>
-        </div>
+    <!-- Header utama aplikasi WebUI -->
+    <header class="webui-header">
+        <!-- Judul modul yang akan ditampilkan di header -->
+        <h1 class="webui-title">Azmunaa's Toolbox</h1>
+    </header>
 
-        <div class="feature-section">
-            <h2>Props</h2>
-            <div class="feature-item">
-                <span>Spoof Perangkat Xiaomi 15</span>
-                <label class="switch">
-                    <input type="checkbox" id="toggleXiaomi15">
-                    <span class="slider round"></span>
-                </label>
+    <!-- Bagian utama konten aplikasi. Ini akan menampung semua bagian fungsional modul. -->
+    <main class="webui-container">
+        <!-- Bagian kartu untuk menampilkan informasi umum modul -->
+        <section class="webui-card">
+            <!-- Judul kartu informasi modul -->
+            <h2 class="webui-card-title">Informasi Modul</h2>
+            <!-- Container untuk menampilkan detail modul yang akan diisi oleh JavaScript -->
+            <div id="module-info">
+                <p><strong>Nama:</strong> <span id="module-name"></span></p>
+                <p><strong>Versi:</strong> <span id="module-version"></span></p>
+                <p><strong>Penulis:</strong> <span id="module-author"></span></p>
+                <p><strong>Deskripsi:</strong> <span id="module-description"></span></p>
             </div>
-            <div class="feature-item">
-                <span>Spoof ROM Userdebug ke User</span>
-                <label class="switch">
-                    <input type="checkbox" id="toggleUserBuildSpoof">
-                    <span class="slider round"></span>
-                </label>
+            <!-- Bagian untuk aksi terkait informasi modul, seperti tautan grup Telegram -->
+            <div class="webui-actions">
+                <!-- Tombol/tautan untuk bergabung dengan grup Telegram, membuka di tab baru -->
+                <a href="https://t.me/+5_tlSzUpZeVhZWM1" target="_blank" class="webui-button webui-button-primary">Gabung Grup Telegram</a>
             </div>
-            <div class="feature-item">
-                <span>Matikan Spoof PIF Bawaan ROM</span>
-                <label class="switch">
-                    <input type="checkbox" id="togglePifSpoofDisable">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </div>
+        </section>
 
-        <div class="feature-section">
-            <h2>Script</h2>
-            <button class="action-button" id="executeKeybox">Pasang Keybox Valid</button>
-            <button class="action-button" id="executeClearAppsData">Hapus Data Play Store & Play Services</button>
-            <button class="action-button" id="executeKillApps">Matikan Play Services & Play Store</button>
-            <button class="action-button" id="executeReplaceSound">Ganti Suara ChargingStarted.ogg</button>
-        </div>
+        <!-- Bagian kartu untuk pengaturan properti (props) modul -->
+        <section class="webui-card">
+            <!-- Judul kartu pengaturan props -->
+            <h2 class="webui-card-title">Pengaturan Props</h2>
+            <!-- Switch/toggle untuk fitur Spoof Perangkat Xiaomi 15 -->
+            <div class="webui-field webui-field-switch">
+                <label for="toggleXiaomi15">Spoof Perangkat Xiaomi 15</label>
+                <input type="checkbox" id="toggleXiaomi15" class="webui-switch">
+            </div>
+            <!-- Switch/toggle untuk fitur Spoof ROM Userdebug ke User -->
+            <div class="webui-field webui-field-switch">
+                <label for="toggleUserBuildSpoof">Spoof ROM Userdebug ke User</label>
+                <input type="checkbox" id="toggleUserBuildSpoof" class="webui-switch">
+            </div>
+            <!-- Switch/toggle untuk fitur Matikan Spoof PIF Bawaan ROM -->
+            <div class="webui-field webui-field-switch">
+                <label for="togglePifSpoofDisable">Matikan Spoof PIF Bawaan ROM</label>
+                <input type="checkbox" id="togglePifSpoofDisable" class="webui-switch">
+            </div>
+            <!-- Bagian untuk aksi terkait pengaturan props, seperti tombol reboot -->
+            <div class="webui-actions" style="margin-top: 15px;">
+                <!-- Tombol untuk menerapkan perubahan dan me-reboot perangkat -->
+                <button class="webui-button webui-button-success" id="rebootButton">Terapkan Perubahan & Reboot</button>
+            </div>
+        </section>
 
-        <div class="log-section">
-            <h2>Log Eksekusi</h2>
-            <textarea id="logOutput" readonly></textarea>
-        </div>
-    </div>
-    <script src="script.js"></script>
+        <!-- Bagian kartu untuk eksekusi skrip-skrip modul -->
+        <section class="webui-card">
+            <!-- Judul kartu eksekusi skrip -->
+            <h2 class="webui-card-title">Eksekusi Skrip</h2>
+            <!-- Container untuk tombol-tombol eksekusi skrip. Dibuat dalam kolom. -->
+            <div class="webui-actions webui-actions-column">
+                <!-- Tombol untuk menjalankan skrip Pasang Keybox Valid -->
+                <button class="webui-button" id="executeKeybox">Pasang Keybox Valid</button>
+                <!-- Tombol untuk menjalankan skrip Hapus Data Play Store & Play Services -->
+                <button class="webui-button" id="executeClearAppsData">Hapus Data Play Store & Play Services</button>
+                <!-- Tombol untuk menjalankan skrip Matikan Play Services & Play Store -->
+                <button class="webui-button" id="executeKillApps">Matikan Play Services & Play Store</button>
+                <!-- Tombol untuk menjalankan skrip Ganti Suara ChargingStarted.ogg -->
+                <button class="webui-button" id="executeReplaceSound">Ganti Suara ChargingStarted.ogg</button>
+            </div>
+        </section>
+
+        <!-- Bagian kartu untuk menampilkan log eksekusi -->
+        <section class="webui-card">
+            <!-- Judul kartu log eksekusi -->
+            <h2 class="webui-card-title">Log Eksekusi</h2>
+            <!-- Area teks untuk menampilkan output log. `readonly` mencegah pengguna mengedit. -->
+            <textarea id="logOutput" class="webui-textarea" rows="10" readonly></textarea>
+        </section>
+    </main>
+
+    <!-- Mengimpor library JavaScript WebUI X dari CDN. Harus diimpor sebelum `app.js`. -->
+    <script src="https://cdn.jsdelivr.net/npm/webui-x@latest/dist/webui.min.js"></script>
+    <!-- Mengimpor skrip JavaScript kustom aplikasi. Ini berisi logika inti WebUI. -->
+    <script src="app.js"></script>
 </body>
 </html>
