@@ -1,0 +1,49 @@
+# Xiaomi 14 Ultra Spoof (Model: 24030PN60G)
+# ==================================================
+
+# Base Properties
+ro.product.brand=xiaomi
+ro.product.manufacturer=xiaomi
+ro.product.device=aurora
+ro.product.model=24030PN60G
+ro.product.marketname=Xiaomi 14 Ultra
+
+# Partisi: odm
+ro.product.odm.brand=xiaomi
+ro.product.odm.manufacturer=xiaomi
+ro.product.odm.device=aurora
+ro.product.odm.model=24030PN60G
+ro.product.odm.marketname=Xiaomi 14 Ultra
+
+# Partisi: product
+ro.product.product.brand=xiaomi
+ro.product.product.manufacturer=xiaomi
+ro.product.product.device=aurora
+ro.product.product.model=24030PN60G
+ro.product.product.marketname=Xiaomi 14 Ultra
+
+# Partisi: system
+ro.product.system.brand=xiaomi
+ro.product.system.manufacturer=xiaomi
+ro.product.system.device=aurora
+ro.product.system.model=24030PN60G
+ro.product.system.marketname=Xiaomi 14 Ultra
+
+# Partisi: system_ext
+ro.product.system_ext.brand=xiaomi
+ro.product.system_ext.manufacturer=xiaomi
+ro.product.system_ext.device=aurora
+ro.product.system_ext.model=24030PN60G
+ro.product.system_ext.marketname=Xiaomi 14 Ultra
+
+# Partisi: vendor
+ro.product.vendor.brand=xiaomi
+ro.product.vendor.manufacturer=xiaomi
+ro.product.vendor.device=aurora
+ro.product.vendor.model=24030PN60G
+ro.product.vendor.marketname=Xiaomi 14 Ultra
+
+# Chipset & Fitur Tambahan
+ro.soc.model=SM8650
+sys.fps_unlock_allowed=120
+ro.build.fingerprint=Xiaomi/aurora/aurora:15/yourbestregard.250228.001/2.0.102.0.VNAMIXM:user/release-keys
