@@ -1,0 +1,7 @@
+id=playintegrityfix
+name=Play Integrity Fix Inject-Manual Modded
+version=v3.3-injectmanual-MODDED-v1001
+versionCode=1001
+author=yourbestregard, KOWX712, chiteroman.
+description=A modified version for my personal use. Simply install the following modules: Zygisk, TrickyStore, and this module. Then press the action button once.
+updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/playintegrityfix_injectmanual_update.json
