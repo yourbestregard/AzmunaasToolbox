@@ -1,0 +1,7 @@
+id=miawchargingsound
+name=Miaw Charging Sound
+version=v1001
+versionCode=1001
+author=yourbestregard
+description=Your device will "miaw" when it starts charging. If there is no change then change folder in this module (default: /miawchargingsound/system/product/media/audio/ui/ChargingStarted.ogg), I am too lazy to organize it.
+updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/miawchargingsound_update.json
