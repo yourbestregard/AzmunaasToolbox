@@ -33,7 +33,10 @@ if [ -d /data/adb/modules/MagiskHidePropsConf ]; then
 fi
 
 # Run common tasks for installation and boot-time
-[ -d "$MODPATH/zygisk" ] && . $MODPATH/common_setup.sh
+if [ -d "$MODPATH/zygisk" ]; then
+    . $MODPATH/common_func.shAdd commentMore actions
+    . $MODPATH/common_setup.sh
+fi
 
 # Migrate custom.pif.json to latest defaults if needed
 if [ -f "$MODPATH/custom.pif.json" ] && ! grep -q "api_level" $MODPATH/custom.pif.json; then
