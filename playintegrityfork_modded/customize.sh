@@ -34,7 +34,7 @@ fi
 
 # Run common tasks for installation and boot-time
 if [ -d "$MODPATH/zygisk" ]; then
-    . $MODPATH/common_func.shAdd commentMore actions
+    . $MODPATH/common_func.sh
     . $MODPATH/common_setup.sh
 fi
 
