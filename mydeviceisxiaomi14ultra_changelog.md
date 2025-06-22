@@ -1,3 +1,3 @@
 # v1001
 
-- initial release.
+- removing a prop that could be problematic.

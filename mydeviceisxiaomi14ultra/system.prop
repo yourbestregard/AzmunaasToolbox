@@ -46,4 +46,3 @@ ro.product.vendor.marketname=Xiaomi 14 Ultra
 # Chipset & Fitur Tambahan
 ro.soc.model=SM8650
 sys.fps_unlock_allowed=120
-ro.build.fingerprint=Xiaomi/aurora/aurora:15/yourbestregard.250228.001/2.0.102.0.VNAMIXM:user/release-keys
