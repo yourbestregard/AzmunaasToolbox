@@ -1,7 +1,7 @@
 #!/sbin/sh
 
-OUTFD=/proc/self/fd/$2
-ui_print() { echo -e "ui_print $1\n" > $OUTFD; }
+#OUTFD=/proc/self/fd/$2
+#ui_print() { echo -e "ui_print $1\n" > $OUTFD; }
 
 # [1] Buat folder ksu dan symlink
 mkdir -p "$MODPATH/ksu"

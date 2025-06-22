@@ -1,7 +1,7 @@
 id=mydeviceisxiaomi14ultra
 name=My Device is Xiaomi 14 Ultra
-version=v1002
-versionCode=1002
+version=v1003
+versionCode=1003
 author=yourbestregard
 description=Spoof device as Xiaomi 14 Ultra (24030PN60G)
 updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/mydeviceisxiaomi14ultra_update.json
