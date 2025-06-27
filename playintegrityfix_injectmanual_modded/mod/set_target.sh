@@ -1,9 +1,9 @@
 #!/bin/sh
 
 log_message() {
-    echo "$(date +%Y-%m-%d\ %H:%M:%S) [SET_TARGET] $1"
+    echo "$(date +%Y-%m-%d\ %H:%M:%S) [KILL_GMS_PROCESS] $1"
 }
-log_message “Start setting target...”
+log_message "Start setting target..."
 t='/data/adb/tricky_store/target.txt'
 tees='/data/adb/tricky_store/tee_status'
 
@@ -23,7 +23,7 @@ echo "io.github.vvb2060.mahoshojo" >> "$t"
 echo "icu.nullptr.nativetest" >> "$t"
 
 # add list
-log_message “Writing target...”
+log_message "Writing target..."
 add_packages() {
     pm list packages "$1" | cut -d ":" -f 2 | while read -r pkg; do
         if [ -n "$pkg" ] && ! grep -q "^$pkg" "$t"; then
@@ -41,4 +41,4 @@ add_packages "-3"
 
 # add system apps
 add_packages "-s"
-log_message “Finish setting target.”
+log_message "Finish setting target."

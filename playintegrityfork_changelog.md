@@ -1,3 +1,4 @@
-# v1002
+# v1003
 
-- Android CI #442: Commit 0132ebb pushed by osm0sis 
+- log message fixed
+- programming logic improved

@@ -1,7 +1,7 @@
 id=playintegrityfix
 name=Play Integrity Fix Inject-Vending Modded
-version=v3.3-injectvending-MODDED-v1001
-versionCode=1001
+version=v3.3-injectvending-MODDED-v1002
+versionCode=1002
 author=yourbestregard, KOWX712, chiteroman.
 description=A modified version for my personal use. Simply install the following modules: Zygisk, TrickyStore, and this module. Then press the action button once.
 updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/playintegrityfix_injectvending_update.json
