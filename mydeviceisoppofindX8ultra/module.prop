@@ -1,0 +1,7 @@
+id=mydeviceisoppofindX8ultra
+name=My Device is Oppo Find X8 Ultra
+version=v1001
+versionCode=1001
+author=yourbestregard
+description=Spoof device as Oppo Find X8 Ultra (PKJ110)
+updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/mydeviceisoppofindX8ultra_update.json

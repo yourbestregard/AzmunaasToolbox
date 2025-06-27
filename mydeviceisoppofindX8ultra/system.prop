@@ -1,0 +1,48 @@
+# Oppo Find X8 Ultra Spoof (Model: PKJ110)
+# ==================================================
+
+# Base Properties
+ro.product.brand=oppo
+ro.product.manufacturer=oppo
+ro.product.device=everest
+ro.product.model=PKJ110
+ro.product.marketname=Oppo Find X8 Ultra
+
+# Partisi: odm
+ro.product.odm.brand=oppo
+ro.product.odm.manufacturer=oppo
+ro.product.odm.device=everest
+ro.product.odm.model=PKJ110
+ro.product.odm.marketname=Oppo Find X8 Ultra
+
+# Partisi: product
+ro.product.product.brand=oppo
+ro.product.product.manufacturer=oppo
+ro.product.product.device=everest
+ro.product.product.model=PKJ110
+ro.product.product.marketname=Oppo Find X8 Ultra
+
+# Partisi: system
+ro.product.system.brand=oppo
+ro.product.system.manufacturer=oppo
+ro.product.system.device=everest
+ro.product.system.model=PKJ110
+ro.product.system.marketname=Oppo Find X8 Ultra
+
+# Partisi: system_ext
+ro.product.system_ext.brand=oppo
+ro.product.system_ext.manufacturer=oppo
+ro.product.system_ext.device=everest
+ro.product.system_ext.model=PKJ110
+ro.product.system_ext.marketname=Oppo Find X8 Ultra
+
+# Partisi: vendor
+ro.product.vendor.brand=oppo
+ro.product.vendor.manufacturer=oppo
+ro.product.vendor.device=everest
+ro.product.vendor.model=PKJ110
+ro.product.vendor.marketname=Oppo Find X8 Ultra
+
+# Chipset & Fitur Tambahan
+ro.soc.model=SM8650
+sys.fps_unlock_allowed=120
