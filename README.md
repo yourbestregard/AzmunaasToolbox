@@ -5,7 +5,7 @@
 - Miaw Charging Sound (yourbestregard)
 - My Device is Oppo Find X8 Ultra (yourbestregard)
 
-If the module I created is useful for you and you want to use the program code, then I give you permission. However, if you want.. add my name to the credit section, thanks^^
+_If the module I created is useful for you and you want to use the program code, then I give you permission. However, if you want.. add my name to the credit section, thanks^^_
 
-# List of modules that use my program code:
+# List of known modules using my program code:
 - Yurikey Manager (dpejoh, Yurii0307)
