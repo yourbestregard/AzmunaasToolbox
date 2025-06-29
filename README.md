@@ -6,3 +6,6 @@
 - My Device is Oppo Find X8 Ultra (yourbestregard)
 
 If the module I created is useful for you and you want to use the program code, then I give you permission. However, if you want.. add my name to the credit section, thanks^^
+
+# List of modules that use my program code:
+- Yurikey Manager (dpejoh, Yurii0307)
