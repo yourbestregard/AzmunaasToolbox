@@ -1,4 +1,4 @@
-# v1003
+# v1004
 
-- log message fixed
-- programming logic improved
+- update to version #448
+- add hints if failing to get keybox or not passing integrity

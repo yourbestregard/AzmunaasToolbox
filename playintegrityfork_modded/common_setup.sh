@@ -39,7 +39,7 @@ for APP in $(grep -v '^#' $LIST); do
                         APK=$(readlink -f $APP);
                     fi
                     if [ -s "$APK" ]; then
-                        PKGNAME=$(unzip -p $APK AndroidManifest.xml | tr -d '\0' | grep -oE 'android.*http' | sed -e 's/android//' -e 's/.application//' -e 's/*http//' | cut -c2-)
+                        PKGNAME=$(unzip -p $APK AndroidManifest.xml | tr -d '\0' | grep -oE 'android.*overlay' | strings | tr -d '\n' | sed -e 's/^android//' -e 's/application//' -e 's;*http.*res/android;;' -e 's/manifest//' -e 's/overlay$//' | grep -oE '[[:alnum:].-_].*overlay' | cut -d\  -f2)
                         if [ "$PKGNAME" ] && grep -q "overlay package=\"$PKGNAME" $CFG; then
                             HIDECFG=$MODPATH$PREFIX$CFG
                             if [ ! -f "$HIDECFG" ]; then

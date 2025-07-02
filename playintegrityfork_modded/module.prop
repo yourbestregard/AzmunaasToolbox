@@ -1,7 +1,7 @@
 id=playintegrityfix
 name=Play Integrity Fork Modded
-version=v13-CI_#442-MODDED-v1003
-versionCode=1003
+version=v13-CI_#448-MODDED-v1004
+versionCode=1004
 author=yourbestregard, osm0sis, chiteroman.
 description=A modified version for my personal use. Simply install the following modules: Zygisk, TrickyStore, and this module. Then press the action button once.
 updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/playintegrityfork_update.json
