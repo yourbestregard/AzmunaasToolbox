@@ -35,7 +35,8 @@ elif command -v wget >/dev/null 2>&1; then
     wget -qO "$KEYBOX_FILE" "$KEYBOX_URL"
     CURL_EXIT_CODE=$?
 else
-    log_message "ERROR: curl or wget not found. Cannot download keybox. Join @azmunaashome group on telegram to get the latest keybox then install the keybox manually."
+    log_message "ERROR: curl or wget not found, caused by the kernel/ROM not setting the Busybox path correctly. Unable to download the lockbox. Join @azmunaashome group on telegram to get the latest keybox then install the keybox manually."
+    log_message "Or download the Busybox module to fix Busybox on your device and reboot: https://mmrl.dev/repository/grdoglgmr/busybox-ndk, then you press the action button again."
     CURL_EXIT_CODE=1
 fi
 

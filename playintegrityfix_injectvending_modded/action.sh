@@ -8,6 +8,9 @@ sh $MODDIR/mod/set_security_patch.sh
 sh $MODDIR/mod/install_keybox.sh
 sh $MODDIR/mod/kill_gms_process.sh
 echo -e "$(date +%Y-%m-%d\ %H:%M:%S) (⁠*⁠＾⁠3⁠＾⁠)⁠/⁠～⁠♡ Happy Meets Strong Integrity!"
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) Are you not pass strong integrity? try changing the spoof settings (without reboot) in /data/adb/pif.json or use WebUI to do it"
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Vending Sdk: False."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 2) Spoof Vending Sdk: True."
 sleep 1
 if [ -z "$MMRL" ] && [ ! -z "$MAGISKTMP" ]; then
     pm path io.github.a13e300.ksuwebui > /dev/null 2>&1 && {
