@@ -8,4 +8,5 @@
 _If the module I created is useful for you and you want to use the program code, then I give you permission. However, if you want.. add my name to the credit section, thanks^^_
 
 _List of known modules using my program code:_
+
 _- Yurikey Manager (dpejoh, Yurii0307)_
