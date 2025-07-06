@@ -1,8 +1,5 @@
 MODDIR="/data/adb/modules/playintegrityfix"
 
-set +o standalone
-unset ASH_STANDALONE
-
 sh $MODDIR/mod/set_target.sh
 sh $MODDIR/mod/set_security_patch.sh
 sh $MODDIR/mod/install_keybox.sh
