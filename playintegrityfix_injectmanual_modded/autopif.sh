@@ -76,7 +76,7 @@ if [ -z "$FINGERPRINT" ] || [ -z "$SECURITY_PATCH" ]; then
 fi
 
 # Preserve previous setting
-spoofConfig="spoofProvider spoofProps spoofSignature DEBUG spoofVendingSdk"
+spoofConfig="spoofBuild spoofProvider spoofProps spoofSignature DEBUG spoofVendingSdk"
 for config in $spoofConfig; do
 	if grep -q "\"$config\": true" "$MODDIR/pif.json"; then
 		eval "$config=true"
@@ -92,6 +92,7 @@ cat <<EOF | tee pif.json
   "MANUFACTURER": "Google",
   "MODEL": "$MODEL",
   "SECURITY_PATCH": "$SECURITY_PATCH",
+  "spoofBuild" : "$spoofBuild",
   "spoofProvider": $spoofProvider,
   "spoofProps": $spoofProps,
   "spoofSignature": $spoofSignature,

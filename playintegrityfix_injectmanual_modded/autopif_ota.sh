@@ -13,15 +13,17 @@ TEMPDIR="$MODDIR/temp" #fallback
 mkdir -p "$TEMPDIR"
 
 # fetch script
-download "https://raw.githubusercontent.com/KOWX712/PlayIntegrityFix/inject_manual/module/autopif.sh" "$TEMPDIR/temp_autopif.sh"
+if download "https://raw.githubusercontent.com/KOWX712/PlayIntegrityFix/inject_manual/module/autopif.sh" "$TEMPDIR/temp_autopif.sh"; then
+    # hash
+    curhash="$(cat $MODDIR/autopif.sh | busybox crc32)"
+    newhash="$(cat $TEMPDIR/temp_autopif.sh | busybox crc32)"
 
-# hash
-curhash="$(cat $MODDIR/autopif.sh | busybox crc32)"
-newhash="$(cat $TEMPDIR/temp_autopif.sh | busybox crc32)"
-
-if [ -s "$TEMPDIR/temp_autopif.sh" ] && [ ! "$newhash" = "$curhash" ]; then
-    cat "$TEMPDIR/temp_autopif.sh" > "$MODDIR/autopif.sh"
-    echo "[+] autopif has been updated"
+    if [ -s "$TEMPDIR/temp_autopif.sh" ] && [ ! "$newhash" = "$curhash" ]; then
+        cat "$TEMPDIR/temp_autopif.sh" > "$MODDIR/autopif.sh"
+        echo "[+] autopif has been updated"
+    fi
+else
+    echo "[!] OTA failed, skipping update."
 fi
 
 rm -rf "$TEMPDIR"

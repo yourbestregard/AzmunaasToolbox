@@ -1,5 +1,5 @@
-@import url('https://mui.kernelsu.org/mmrl/insets.css');
-@import url('https://mui.kernelsu.org/mmrl/colors.css');
+@import url('https://mui.kernelsu.org/internal/insets.css');
+@import url('https://mui.kernelsu.org/internal/colors.css');
 
 :root {
     /* window inset */
@@ -95,10 +95,23 @@ body {
 
 .advanced-option {
     display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.advanced-option.show {
+    max-height: 1000px;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 #advanced {
     justify-content: center;
+    color: var(--text-muted);
+    padding: 5px;
 
     span {
         font-weight: normal;
