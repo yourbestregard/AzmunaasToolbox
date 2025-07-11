@@ -122,7 +122,11 @@ export function spawn(command, args = [], options = {}) {
  */
 export function toast(message) {
     try {
-        ksu.toast(message);
+        if (typeof ksu !== 'undefined') {
+            ksu.toast(message);
+        } else {
+            console.log(message);
+        }
     } catch (error) {   
         console.error("Error displaying toast:", error);
     }

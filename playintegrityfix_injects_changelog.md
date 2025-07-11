@@ -1,4 +1,4 @@
-# v1004
+# v1005
 
-- initial release
-- I forgot to add the mod, lol 
+- update to version 4.1
+- fix typo
