@@ -1,7 +1,7 @@
 #!/bin/sh
 
 log_message() {
-    echo "$(date +%Y-%m-%d\ %H:%M:%S) [KILL_GMS_PROCESS] $1"
+    echo "$(date +%Y-%m-%d\ %H:%M:%S) [SET_TARGET] $1"
 }
 log_message "Start setting target..."
 t='/data/adb/tricky_store/target.txt'

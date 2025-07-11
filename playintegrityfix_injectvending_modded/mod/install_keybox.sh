@@ -9,7 +9,7 @@ KEYBOX_URL="https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/ref
 # Function to record logs with timestamp format
 log_message() {
     # Print logs to Magisk/KernelSU/Apatch logs
-    echo "$(date +'%Y-%m-%d %H:%M:%S') [KEYBOX] $1"
+    echo "$(date +'%Y-%m-%d %H:%M:%S') [INSTALL_KEYBOX] $1"
 }
 
 # Backup existing keyboxes if found
