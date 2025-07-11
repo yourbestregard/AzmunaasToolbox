@@ -131,7 +131,10 @@ echo "$MODEL ($PRODUCT)";
 FINGERPRINT="$(grep -am1 'post-build=' PIXEL_ZIP_METADATA 2>/dev/null | cut -d= -f2)";
 SECURITY_PATCH="$(grep -am1 'security-patch-level=' PIXEL_ZIP_METADATA 2>/dev/null | cut -d= -f2)";
 if [ -z "$FINGERPRINT" -o -z "$SECURITY_PATCH" ]; then
-  echo "\nError: Failed to extract information from metadata!";
+  case "$(getprop ro.product.cpu.abi)" in
+    armeabi-v7a|x86) [ "$BUSYBOX" ] && ISBB32MSG=", install wget2";;
+  esac;
+  echo "\nError: Failed to extract information from metadata$ISBB32MSG!";
   exit 1;
 fi;
 
