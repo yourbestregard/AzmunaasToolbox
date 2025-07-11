@@ -3,4 +3,5 @@ name=Android Identity Changer
 version=v1000-initialrelease
 versionCode=1000
 author=yourbestregard
-description=Ubah identitas perangkat dengan mudah melalui WebUI.
+description=Change the device identity easily through WebUI. Number of device identities: 6
+updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/androididentitychanger_update.json

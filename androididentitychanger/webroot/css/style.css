@@ -54,7 +54,10 @@ main {
     font-weight: 700;
     text-align: center;
     color: var(--text-primary);
-    margin-bottom: 2.5rem;
+    padding-top: 2.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Bayangan teks agar lebih terbaca */
 }
 
