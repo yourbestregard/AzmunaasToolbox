@@ -1,3 +1,3 @@
 # v1000
 
-- Initial release
+- it was too brutal, I reduced the spoof

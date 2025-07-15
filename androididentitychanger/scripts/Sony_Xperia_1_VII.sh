@@ -42,8 +42,8 @@ fi
 
 formatted_month=$(printf "%02d" $prev_month)
 SECURITY_PATCH="${prev_year}-${formatted_month}-05"
-FINGERPRINT="Sony/pdx256/pdx256:15/AQ3A.241126.002/SHIMANTO-1.0.0-REL-250402-1707:user/release-keys"
-DESCRIPTION="sssi_64-user 15 AQ3A.241126.002 QSSI-15.2.0-REL-250405-1707 release-keys"
+#FINGERPRINT="Sony/pdx256/pdx256:15/AQ3A.241126.002/SHIMANTO-1.0.0-REL-250402-1707:user/release-keys"
+#DESCRIPTION="sssi_64-user 15 AQ3A.241126.002 QSSI-15.2.0-REL-250405-1707 release-keys"
 
 # Set patch keamanan dan versi build
 resetprop_and_write ro.build.id 71.0.A.2.22
@@ -51,7 +51,7 @@ resetprop_and_write ro.build.version.incremental QSSI-15.2.0-REL-250405-1707
 resetprop_and_write ro.build.version.security_patch "$SECURITY_PATCH"
 resetprop_and_write ro.vendor.build.security_patch "$SECURITY_PATCH"
 resetprop_and_write ro.boot.vbmeta.patch_level "$SECURITY_PATCH"
-resetprop_and_write ro.build.description "$DESCRIPTION"
+#resetprop_and_write ro.build.description "$DESCRIPTION"
 
 # Set properti produk di semua partisi
 for prefix in "" bootimage system product odm system_ext; do
@@ -64,7 +64,7 @@ for prefix in "" bootimage system product odm system_ext; do
     fi
 
     # Set fingerprint
-    resetprop_and_write "${prop_prefix}.build.fingerprint" "$FINGERPRINT"
+    #resetprop_and_write "${prop_prefix}.build.fingerprint" "$FINGERPRINT"
 
     # Set product properties
     resetprop_and_write "${product_prefix}.brand" Sony
@@ -81,7 +81,7 @@ for prefix in "" bootimage system product odm system_ext; do
 done
 
 # Ganti tag "userdebug" dan "test-keys" menjadi tag rilis resmi di fingerprint dan set build.type serta build.tags
-for prefix in "" system vendor system_ext product odm odm_dlkm vendor_dlkm bootimage; do
+for prefix in "" bootimage system product odm system_ext; do
     if [ -z "$prefix" ]; then
         prop_prefix="ro"
     else

@@ -42,8 +42,8 @@ fi
 
 formatted_month=$(printf "%02d" $prev_month)
 SECURITY_PATCH="${prev_year}-${formatted_month}-05"
-FINGERPRINT="google/comet/comet:15/AP3A.241005.015.A2/12426170:user/release-keys"
-DESCRIPTION="comet-user 15 AP3A.241005.015.A2 12426170 release-keys"
+#FINGERPRINT="google/comet/comet:15/AP3A.241005.015.A2/12426170:user/release-keys"
+#DESCRIPTION="comet-user 15 AP3A.241005.015.A2 12426170 release-keys"
 
 # Set patch keamanan dan versi build
 resetprop_and_write ro.build.id AP3A.241005.015.A2
@@ -51,7 +51,7 @@ resetprop_and_write ro.build.version.incremental 12426170
 resetprop_and_write ro.build.version.security_patch "$SECURITY_PATCH"
 resetprop_and_write ro.vendor.build.security_patch "$SECURITY_PATCH"
 resetprop_and_write ro.boot.vbmeta.patch_level "$SECURITY_PATCH"
-resetprop_and_write ro.build.description "$DESCRIPTION"
+#resetprop_and_write ro.build.description "$DESCRIPTION"
 
 # Set properti produk di semua partisi
 for prefix in "" bootimage system product odm system_ext; do
@@ -64,7 +64,7 @@ for prefix in "" bootimage system product odm system_ext; do
     fi
 
     # Set fingerprint
-    resetprop_and_write "${prop_prefix}.build.fingerprint" "$FINGERPRINT"
+    #resetprop_and_write "${prop_prefix}.build.fingerprint" "$FINGERPRINT"
 
     # Set product properties
     resetprop_and_write "${product_prefix}.brand" google
@@ -81,7 +81,7 @@ for prefix in "" bootimage system product odm system_ext; do
 done
 
 # Ganti tag "userdebug" dan "test-keys" menjadi tag rilis resmi di fingerprint dan set build.type serta build.tags
-for prefix in "" system vendor system_ext product odm odm_dlkm vendor_dlkm bootimage; do
+for prefix in "" bootimage system product odm system_ext; do
     if [ -z "$prefix" ]; then
         prop_prefix="ro"
     else
