@@ -1,8 +1,8 @@
 id=androididentitychanger
 name=Android Identity Changer
-version=v1001
-versionCode=1001
+version=v1002
+versionCode=1002
 author=yourbestregard, MunchUser
-description=Change the device identity easily through WebUI. Number of device identities: 6
+description=Change the device identity easily through WebUI. Number of device identities: 6. Remember to backup boot, dtbo, and nvdata for mediatek users. Remove module via recovery if bootloop.
 updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/androididentitychanger_update.json
 banner=https://i.ibb.co/HTNTjDCY/background.jpg
