@@ -1,4 +1,5 @@
 # Module List:
+- Android Identity Changer (yourbestregard, MunchUser)
 - Play Integrity Fork (yourbestregard, oms0sis, chiteroman)
 - Play Integrity Fix Inject-Manual, Inject-S, Inject-Vending (yourbestregard, KOWX712, chiteroman)
 - My Device is Xiaomi 14 Ultra (yourbestregard)
