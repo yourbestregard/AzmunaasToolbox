@@ -1,5 +1,5 @@
 /* ==================================================
-   🔹 Variabel Warna & Font
+   🔹 Color & Font Variables
 ================================================== */
 :root {
     --text-primary: #ffffff;
@@ -12,7 +12,7 @@
 }
 
 /* ==================================================
-   🔹 Gaya Dasar & Latar Belakang Gambar
+   🔹 Base Styles & Background Image
 ================================================== */
 * {
     box-sizing: border-box;
@@ -23,23 +23,20 @@
 body {
     font-family: var(--font-sans);
     color: var(--text-primary);
-    
-    background-image: url('../background.jpg'); /* Ganti 'background.jpg' jika nama file Anda berbeda */
-    background-size: cover; /* Memastikan gambar menutupi seluruh area */
-    background-position: center center; /* Posisi gambar di tengah */
-    background-attachment: fixed; /* Gambar tidak ikut scroll */
+
+    background-image: url('../background.jpg'); /* Change 'background.jpg' if your file is different */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
     min-height: 100vh;
 }
 
-/* Lapisan overlay gelap agar teks lebih mudah dibaca */
+/* Dark overlay layer for better text readability */
 body::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Overlay gelap 50% */
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
 }
 
@@ -58,16 +55,22 @@ main {
     padding-bottom: 0.5rem;
     margin-top: 0;
     margin-bottom: 1.5rem;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Bayangan teks agar lebih terbaca */
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.section-title {
+    text-align: center;
 }
 
 /* ==================================================
-   🔹 Tombol Aksi dengan Efek Kaca Buram (Frosted Glass)
+   🔹 Action Buttons with Frosted Glass Effect
+   🔹 Spacing & Responsive Grid Layout
 ================================================== */
 .actions-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px; /* Increased gap for comfortable spacing */
+    margin-top: 1rem;
 }
 
 .action-button {
@@ -81,9 +84,16 @@ main {
     text-align: center;
     transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
-    background-color: rgba(30, 30, 30, 0.6); /* Latar belakang semi-transparan */
-    backdrop-filter: blur(10px); /* Efek blur pada latar belakang di belakang elemen */
+    background-color: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+
+    /* Minimum size for easy touch */
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
 }
 
 .action-button:hover {
@@ -120,7 +130,7 @@ main {
 }
 
 /* ==================================================
-   🔹 Notifikasi Toast
+   🔹 Toast Notifications
 ================================================== */
 #toast-container {
     position: fixed;
@@ -157,4 +167,11 @@ main {
 @keyframes toast-fade-in-out {
     0%, 100% { opacity: 0; transform: translateY(20px); }
     10%, 90% { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================================================
+   🔹 Spacing between Main Menu and Additional Menu
+================================================== */
+#button-container {
+    margin-bottom: 3rem;
 }

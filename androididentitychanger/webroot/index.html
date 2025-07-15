@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,13 +9,26 @@
 <body>
     <div id="app">
         <main id="page-content">
-            <h1 class="main-title">Pilih Profil Identitas</h1>
+            <h1 class="main-title">Select Menu</h1>
+
+            <h2 class="section-title">Main Menu</h2>
             <div id="button-container" class="actions-grid">
-                <p class="loading-text">Mencari profil...</p>
+                <button class="action-button" data-script="Google_Pixel_9_Pro_Fold.sh">Pixel 9 Pro Fold</button>
+                <button class="action-button" data-script="Motorola_Razr_50_Ultra.sh">Razr 50 Ultra</button>
+                <button class="action-button" data-script="Oneplus_PKZ110.sh">OnePlus PKZ110</button>
+                <button class="action-button" data-script="Samsung_S25_Ultra_5G.sh">Samsung S25 Ultra 5G</button>
+                <button class="action-button" data-script="Sony_Xperia_1_VII.sh">Sony Xperia 1 VII</button>
+                <button class="action-button" data-script="Xiaomi_15_Ultra.sh">Xiaomi 15 Ultra</button>
+            </div>
+
+            <h2 class="section-title">Additional Menu</h2>
+            <div id="additional-menu" class="actions-grid">
+                <button class="action-button" data-script="reset_default.sh">Reset to Default</button>
+                <button class="action-button" data-script="reboot.sh">Reboot Device (Required)</button>
             </div>
         </main>
     </div>
-    
+
     <div id="toast-container"></div>
     <script src="js/main.js"></script>
 </body>
