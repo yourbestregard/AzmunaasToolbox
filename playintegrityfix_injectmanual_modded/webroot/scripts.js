@@ -41,7 +41,7 @@ function applyButtonEventListeners() {
         document.querySelectorAll('.advanced-option').forEach(option => {
             option.style.display = 'flex';
             option.offsetHeight;
-            option.classList.add('show');
+            option.classList.add('advanced-show');
         });
         advanced.style.display = 'none';
         const lists = Array.from(document.querySelectorAll('.toggle-list'));
