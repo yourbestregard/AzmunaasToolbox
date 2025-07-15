@@ -42,7 +42,7 @@ function applyButtonEventListeners() {
         document.querySelectorAll('.advanced-option').forEach(option => {
             option.style.display = 'flex';
             option.offsetHeight;
-            option.classList.add('show');
+            option.classList.add('advanced-show');
         });
         advanced.style.display = 'none';
         const lists = Array.from(document.querySelectorAll('.toggle-list'));
@@ -93,26 +93,26 @@ function applyButtonEventListeners() {
 }
 
 // Function to load the version from module.prop
-async function loadVersionFromModuleProp() {
-    const versionElement = document.getElementById('version-text');
-    const { errno, stdout, stderr } = await exec("grep '^version=' /data/adb/modules/playintegrityfix/module.prop | cut -d'=' -f2");
-    if (errno === 0) {
-        versionElement.textContent = stdout.trim();
-    } else {
-        appendToOutput("[!] Failed to read version from module.prop");
-        console.error("Failed to read version from module.prop:", stderr);
-    }
-    checkDescription();
-}
+ async function loadVersionFromModuleProp() {
+ const versionElement = document.getElementById('version-text');
+// const { errno, stdout, stderr } = await exec("grep '^version=' /data/adb/modules/playintegrityfix/module.prop | cut -d'=' -f2");
+// if (errno === 0) {
+// versionElement.textContent = stdout.trim();
+//  } else {
+// appendToOutput("[!] Failed to read version from module.prop");
+// console.error("Failed to read version from module.prop:", stderr);
+//  }
+// checkDescription();
+ }
 
 // Check description
-async function checkDescription() {
-    const unofficialOverlay = document.getElementById('unofficial-warning');
-    const { errno } = await exec("grep -q 'tampered' /data/adb/modules/playintegrityfix/module.prop");
-    if (typeof ksu !== 'undefined' && errno === 0) {
-        unofficialOverlay.style.display = 'flex';
-    }
-}
+// async function checkDescription() {
+// const unofficialOverlay = document.getElementById('unofficial-warning');
+// const { errno } = await exec("grep -q 'tampered' /data/adb/modules/playintegrityfix/module.prop");
+// if (typeof ksu !== 'undefined' && errno === 0) {
+// unofficialOverlay.style.display = 'flex';
+//  }
+// }
 
 // Function to load spoof config
 async function loadSpoofConfig() {

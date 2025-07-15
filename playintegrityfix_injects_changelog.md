@@ -1,4 +1,4 @@
-# v1005
+# v1006
 
-- update to version 4.1
-- fix typo
+- update to version #138
+- remove unofficial warning
