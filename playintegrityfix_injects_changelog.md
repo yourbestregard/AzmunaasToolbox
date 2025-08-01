@@ -1,4 +1,3 @@
-# v1006
+# v1007
 
-- update to version #138
-- remove unofficial warning
+- update to version #145

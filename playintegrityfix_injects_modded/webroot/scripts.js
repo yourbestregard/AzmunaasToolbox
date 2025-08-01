@@ -1,6 +1,7 @@
 import { exec, spawn, toast } from "./assets/kernelsu.js";
 
 let forcePreview = true;
+let scriptOnly = false;
 let shellRunning = false;
 let initialPinchDistance = null;
 let currentFontSize = 14;
@@ -11,14 +12,12 @@ const spoofBuildToggle = document.getElementById('toggle-spoofBuild');
 const spoofProviderToggle = document.getElementById('toggle-spoofProvider');
 const spoofPropsToggle = document.getElementById('toggle-spoofProps');
 const spoofSignatureToggle = document.getElementById('toggle-spoofSignature');
-const debugToggle = document.getElementById('toggle-debug');
 const spoofVendingSdkToggle = document.getElementById('toggle-sdk-vending');
 const spoofConfig = [
     { container: "spoofBuild-toggle-container", toggle: spoofBuildToggle, type: 'spoofBuild' },
     { container: "spoofProvider-toggle-container", toggle: spoofProviderToggle, type: 'spoofProvider' },
     { container: "spoofProps-toggle-container", toggle: spoofPropsToggle, type: 'spoofProps' },
     { container: "spoofSignature-toggle-container", toggle: spoofSignatureToggle, type: 'spoofSignature' },
-    { container: "debug-toggle-container", toggle: debugToggle, type: 'DEBUG' },
     { container: "sdk-vending-toggle-container", toggle: spoofVendingSdkToggle, type: 'spoofVendingSdk' }
 ];
 
@@ -26,6 +25,7 @@ const spoofConfig = [
 function applyButtonEventListeners() {
     const fetchButton = document.getElementById('fetch');
     const previewFpToggle = document.getElementById('preview-fp-toggle-container');
+    const scriptOnlyToggle = document.getElementById('script-only-toggle-container');
     const advanced = document.getElementById('advanced');
     const clearButton = document.querySelector('.clear-terminal');
     const terminal = document.querySelector('.output-terminal-content');
@@ -38,6 +38,15 @@ function applyButtonEventListeners() {
         appendToOutput(`[+] Switched fingerprint to ${forcePreview ? 'preview' : 'beta'}`);
     });
 
+    scriptOnlyToggle.addEventListener('click', async () => {
+        await exec(`${scriptOnly ? 'rm -rf /data/adb/pif_script_only' : 'touch /data/adb/pif_script_only'} || true
+            killall com.google.android.gms.unstable || true
+            killall com.android.vending || true
+        `);
+        loadScriptOnlyConfig();
+        appendToOutput(`[+] ${scriptOnly ? 'Disabled' : 'Enabled'} script only mode.`);
+    });
+
     advanced.addEventListener('click', () => {
         document.querySelectorAll('.advanced-option').forEach(option => {
             option.style.display = 'flex';
@@ -45,10 +54,7 @@ function applyButtonEventListeners() {
             option.classList.add('advanced-show');
         });
         advanced.style.display = 'none';
-        const lists = Array.from(document.querySelectorAll('.toggle-list'));
-        lists.forEach(list => list.style.borderBottom = '1px solid var(--border-color)');
-        const visibleLists = lists.filter(list => getComputedStyle(list).display !== 'none');
-        if (visibleLists.length > 0) visibleLists[visibleLists.length - 1].style.borderBottom = 'none';
+        refreshBorder();
     });
 
     clearButton.addEventListener('click', () => {
@@ -93,26 +99,26 @@ function applyButtonEventListeners() {
 }
 
 // Function to load the version from module.prop
- async function loadVersionFromModuleProp() {
- const versionElement = document.getElementById('version-text');
-// const { errno, stdout, stderr } = await exec("grep '^version=' /data/adb/modules/playintegrityfix/module.prop | cut -d'=' -f2");
-// if (errno === 0) {
-// versionElement.textContent = stdout.trim();
-//  } else {
-// appendToOutput("[!] Failed to read version from module.prop");
-// console.error("Failed to read version from module.prop:", stderr);
-//  }
-// checkDescription();
- }
+async function loadVersionFromModuleProp() {
+    // const versionElement = document.getElementById('version-text');
+    // const { errno, stdout, stderr } = await exec("grep '^version=' /data/adb/modules/playintegrityfix/module.prop | cut -d'=' -f2");
+    // if (errno === 0) {
+    //     versionElement.textContent = stdout.trim();
+    // } else {
+    //     appendToOutput("[!] Failed to read version from module.prop");
+    //     console.error("Failed to read version from module.prop:", stderr);
+    // }
+    // checkDescription();
+}
 
 // Check description
-// async function checkDescription() {
-// const unofficialOverlay = document.getElementById('unofficial-warning');
-// const { errno } = await exec("grep -q 'tampered' /data/adb/modules/playintegrityfix/module.prop");
-// if (typeof ksu !== 'undefined' && errno === 0) {
-// unofficialOverlay.style.display = 'flex';
-//  }
-// }
+async function checkDescription() {
+    // const unofficialOverlay = document.getElementById('unofficial-warning');
+    // const { errno } = await exec("grep -q 'tampered' /data/adb/modules/playintegrityfix/module.prop");
+    // if (typeof ksu !== 'undefined' && errno === 0) {
+    //     unofficialOverlay.style.display = 'flex';
+    // }
+}
 
 // Function to load spoof config
 async function loadSpoofConfig() {
@@ -125,7 +131,6 @@ async function loadSpoofConfig() {
         spoofProviderToggle.checked = config.spoofProvider;
         spoofPropsToggle.checked = config.spoofProps;
         spoofSignatureToggle.checked = config.spoofSignature;
-        debugToggle.checked = config.DEBUG;
         spoofVendingSdkToggle.checked = config.spoofVendingSdk;
     } catch (error) {
         appendToOutput(`[!] Failed to load spoof config.`);
@@ -405,6 +410,29 @@ async function checkMMRL() {
     }
 }
 
+function loadScriptOnlyConfig() {
+    exec('[ -e "/data/adb/pif_script_only" ]')
+        .then(({ errno }) => {
+            scriptOnly = errno === 0;
+            document.querySelectorAll('.toggle-list').forEach(toggle => {
+                if (toggle.classList.contains('advanced-option')
+                    && !toggle.classList.contains('advanced-show')
+                    || toggle.classList.contains('script-only')
+                ) return;
+                toggle.style.display = scriptOnly ? 'none' : 'flex';
+            });
+            document.getElementById('toggle-script-only').checked = scriptOnly;
+            refreshBorder();
+        });
+}
+
+function refreshBorder() {
+    const lists = Array.from(document.querySelectorAll('.toggle-list'));
+    lists.forEach(list => list.style.borderBottom = '1px solid var(--border-color)');
+    const visibleLists = lists.filter(list => getComputedStyle(list).display !== 'none');
+    if (visibleLists.length > 0) visibleLists[visibleLists.length - 1].style.borderBottom = 'none';
+}
+
 function getDistance(touch1, touch2) {
     return Math.hypot(
         touch1.clientX - touch2.clientX,
@@ -426,6 +454,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         setupSpoofConfigButton(config.container, config.toggle, config.type);
     });
     loadPreviewFingerprintConfig();
+    loadScriptOnlyConfig();
     applyButtonEventListeners();
     applyRippleEffect();
     updateAutopif();
