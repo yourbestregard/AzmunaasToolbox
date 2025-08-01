@@ -79,4 +79,6 @@ resetprop_if_match() {
 }
 
 # stub for boot-time
-ui_print() { return; }
+if [ "$(getprop sys.boot_completed)" != "1" ]; then
+    ui_print() { return; }
+fi

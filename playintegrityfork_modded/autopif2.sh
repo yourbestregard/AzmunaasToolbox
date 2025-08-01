@@ -195,8 +195,11 @@ if [ "$DIR" = /data/adb/modules/playintegrityfix/autopif2 ]; then
   if [ -f "$TS_SECPAT" ]; then
     item "Updating Tricky Store security_patch.txt ...";
     [ -s "$TS_SECPAT" ] || echo "all=" > $TS_SECPAT;
+    grep -qE '^[0-9]{8}$' $TS_SECPAT && sed -i "s/^.*$/${SECURITY_PATCH//-}/" $TS_SECPAT;
+    grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' $TS_SECPAT && sed -i "s/^.*$/$SECURITY_PATCH/" $TS_SECPAT;
     grep -q 'all=' $TS_SECPAT && sed -i "s/all=.*/all=$SECURITY_PATCH/" $TS_SECPAT;
     grep -q 'system=' $TS_SECPAT && sed -i "s/system=.*/system=$(echo ${SECURITY_PATCH//-} | cut -c-6)/" $TS_SECPAT;
+    sed -i '$a\' $TS_SECPAT;
     cat $TS_SECPAT;
   fi;
   if [ -f /data/adb/modules/playintegrityfix/killpi.sh ]; then

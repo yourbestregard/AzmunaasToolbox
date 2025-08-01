@@ -137,6 +137,7 @@ if [ -f "$OUT" ]; then
 fi;
 
 [ "$INSTALL" ] || item "Writing fields and properties to updated custom.pif.json ...";
+[ "$ADVANCED" ] && item "Adding Advanced Settings entries ...";
 
 (echo "{";
 echo "  // Build Fields";
