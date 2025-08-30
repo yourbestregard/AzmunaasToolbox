@@ -3,6 +3,11 @@
 
 _Change the device identity easily through WebUI. Number of device identities: 6. Remember to backup boot, dtbo, and nvdata for mediatek users. Remove module via recovery if bootloop._
 
+- USB Debugging Without Auth (yourbestregard)
+
+_Forcibly enable USB Debugging without screen confirmation._
+
+
 - Play Integrity Fork (yourbestregard, oms0sis, chiteroman)
 
 _A modified version for my personal use. Simply install the following modules: Zygisk, TrickyStore, and this module. Then press the action button once._
