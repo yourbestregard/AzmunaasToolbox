@@ -7,14 +7,15 @@ case "$HOME" in
   *termux*) echo "autopif2: need su root environment"; exit 1;;
 esac;
 
+FORCE_TOP=1;
 FORCE_DEPTH=1;
 until [ -z "$1" ]; do
   case "$1" in
-    -h|--help|help) echo "sh autopif2.sh [-a|-s] [-m] [-p] [-d #]"; exit 0;;
+    -h|--help|help) echo "sh autopif2.sh [-a|-s] [-m] [-t #] [-d #]"; exit 0;;
     -a|--advanced|advanced) ARGS="-a"; shift;;
     -s|--strong|strong) ARGS="-a"; PATCH_COMMENT=1; spoofProvider=0; shift;;
     -m|--match|match) FORCE_MATCH=1; shift;;
-    -p|--preview|preview) FORCE_PREVIEW=1; shift;;
+    -t|--top|top) echo "$2" | grep -q '^[1-9]$' || exit 1; FORCE_TOP=$2; shift 2;;
     -d|--depth|depth) echo "$2" | grep -q '^[1-9]$' || exit 1; FORCE_DEPTH=$2; shift 2;;
     *) break;;
   esac;
@@ -80,15 +81,9 @@ cd "$DIR";
 
 item "Crawling Android Developers for latest Pixel Beta ...";
 wget -q -O PIXEL_VERSIONS_HTML --no-check-certificate https://developer.android.com/about/versions 2>&1 || exit 1;
-wget -q -O PIXEL_LATEST_HTML --no-check-certificate $(grep -o 'https://developer.android.com/about/versions/.*[0-9]"' PIXEL_VERSIONS_HTML | sort -ru | cut -d\" -f1 | head -n1) 2>&1 || exit 1;
-if grep -qE 'Developer Preview|tooltip>.*preview program' PIXEL_LATEST_HTML && [ ! "$FORCE_PREVIEW" ]; then
-  wget -q -O PIXEL_BETA_HTML --no-check-certificate $(grep -o 'https://developer.android.com/about/versions/.*[0-9]"' PIXEL_VERSIONS_HTML | sort -ru | cut -d\" -f1 | head -n2 | tail -n1) 2>&1 || exit 1;
-else
-  TITLE="Preview ";
-  mv -f PIXEL_LATEST_HTML PIXEL_BETA_HTML;
-fi;
-wget -q -O PIXEL_OTA_HTML --no-check-certificate https://developer.android.com$(grep -o 'href=".*download-ota.*"' PIXEL_BETA_HTML | cut -d\" -f2 | head -n$FORCE_DEPTH | tail -n1) 2>&1 || exit 1;
-echo "$(grep -m1 -oE 'tooltip>Android .*[0-9]' PIXEL_OTA_HTML | cut -d\> -f2) $TITLE$(grep -oE 'tooltip>QPR.* Beta' PIXEL_OTA_HTML | cut -d\> -f2 | head -n$FORCE_DEPTH | tail -n1)";
+wget -q -O PIXEL_LATEST_HTML --no-check-certificate $(grep -o 'https://developer.android.com/about/versions/.*[0-9]"' PIXEL_VERSIONS_HTML | sort -ru | cut -d\" -f1 | head -n$FORCE_TOP | tail -n1) 2>&1 || exit 1;
+wget -q -O PIXEL_OTA_HTML --no-check-certificate https://developer.android.com$(grep -o 'href=".*download-ota.*"' PIXEL_LATEST_HTML | grep 'qpr' | cut -d\" -f2 | head -n$FORCE_DEPTH | tail -n1) 2>&1 || exit 1;
+echo "$(grep -m1 -oE 'tooltip>Android .*[0-9]' PIXEL_OTA_HTML | cut -d\> -f2) $(grep -oE 'tooltip>QPR.* Beta' PIXEL_OTA_HTML | cut -d\> -f2 | head -n$FORCE_DEPTH | tail -n1)";
 
 BETA_REL_DATE="$(date -D '%B %e, %Y' -d "$(grep -m1 -A1 'Release date' PIXEL_OTA_HTML | tail -n1 | sed 's;.*<td>\(.*\)</td>.*;\1;')" '+%Y-%m-%d')";
 BETA_EXP_DATE="$(date -D '%s' -d "$(($(date -D '%Y-%m-%d' -d "$BETA_REL_DATE" '+%s') + 60 * 60 * 24 * 7 * 6))" '+%Y-%m-%d')";
@@ -167,7 +162,7 @@ if [ -f "$MIGRATE" ]; then
   if [ -n "$ARGS" ]; then
     grep_json() { [ -f "$2" ] && grep -m1 "$1" $2 | cut -d\" -f4; }
     verboseLogs=$(grep_json "VERBOSE_LOGS" $OLDJSON);
-    ADVSETTINGS="spoofBuild spoofProps spoofProvider spoofSignature spoofVendingSdk verboseLogs";
+    ADVSETTINGS="spoofBuild spoofProps spoofProvider spoofSignature spoofVendingFingerprint spoofVendingSdk verboseLogs";
     for SETTING in $ADVSETTINGS; do
       eval [ -z \"\$$SETTING\" ] \&\& $SETTING=$(grep_json "$SETTING" $OLDJSON);
       eval TMPVAL=\$$SETTING;
