@@ -14,11 +14,11 @@ else
 fi
 
 # Hide action.sh if not using Magisk
-#if [ "$KSU" = true ] || [ "$APATCH" = true ]; then
-#    [ -f "$MODPATH/action.sh" ] && mv -f "$MODPATH/action.sh" "$MODPATH/action.sh.old"
-#else
-#    [ -f "$MODPATH/action.sh.old" ] && mv -f "$MODPATH/action.sh.old" "$MODPATH/action.sh"
-#fi
+if [ "$KSU" = true ] || [ "$APATCH" = true ]; then
+    [ -f "$MODPATH/action.sh" ] && mv -f "$MODPATH/action.sh" "$MODPATH/action.sh.old"
+else
+    [ -f "$MODPATH/action.sh.old" ] && mv -f "$MODPATH/action.sh.old" "$MODPATH/action.sh"
+fi
 
 # Conditional early sensitive properties
 

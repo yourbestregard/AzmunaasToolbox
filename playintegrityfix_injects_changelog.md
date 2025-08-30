@@ -1,3 +1,5 @@
-# v1007
+# v1008
 
-- update to version #145
+- update to version CI #147
+- fix mod function
+- remove unofficial warning
