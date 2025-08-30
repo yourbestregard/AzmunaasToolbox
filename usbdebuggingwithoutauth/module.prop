@@ -1,0 +1,7 @@
+id=usbdebuggingwithoutauth
+name=USB Debugging Without Auth
+version=v1001
+versionCode=1001
+author=yourbestregard
+description=Forcibly enable USB Debugging without screen confirmation.
+updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/usbdebuggingwithoutauth_update.json
