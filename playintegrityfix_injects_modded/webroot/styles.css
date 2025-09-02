@@ -79,27 +79,98 @@ body {
 }
 
 .toggle-list {
-    display: flex;
-    align-items: center;
     background-color: var(--bg-secondary);
-    min-height: 25px;
-    padding: 8px 20px;
-    white-space: nowrap;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);;
-    position: relative;
+    padding: 0 15px;
     overflow: hidden;
     transition: opacity 0.2s ease;
 }
 
-.toggle-list:last-child {
+.toggle {
+    width: 100%;
+    min-height: 25px;
+    padding: 8px 5px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    text-align: left;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+    box-sizing: border-box;
+}
+
+.first-toggle {
+    padding-top: 15px;
+}
+
+.last-toggle {
     border-bottom: none;
-    margin-bottom: 0;
+    padding-bottom: 15px;
+}
+
+.fp-box {
+    min-width: calc(100% + 30px);
+    padding: 0;
+    margin: 0 -15px;
+    border: none;
+}
+
+.fp-box>div {
+    flex-shrink: 0;
+    padding: 8px 20px;
+    padding-top: 15px;
+}
+
+.fp-box-border {
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    width: calc(100% - 70px);
+    border-bottom: var(--border-color) solid 1px;
+}
+
+#fetch {
+    padding-right: 30px;
+}
+
+#view {
+    padding-left: 30px;
+    padding-right: 30px;
+    position: relative;
+}
+
+.view-border {
+    position: absolute;
+    bottom: 5px;
+    left: 0;    
+    height: calc(100% - 15px);
+    width: 100%;
+    border-left: var(--border-color) solid 1px;
+    border-right: var(--border-color) solid 1px;
+    box-sizing: border-box;
+}
+
+#select {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+    padding-left: 5px;
+}
+
+#select-devices {
+    text-align: right;
+    width: 100%;
+    background-color: transparent;
+    color: var(--text-primary);
+    border: none;
+    font-size: inherit;
+    font: inherit;
+    appearance: none;
+    outline: none;
+    user-select: none;
 }
 
 .advanced-option {
     display: none;
-    max-height: 0;
     overflow: hidden;
     transition: all 0.3s ease;
     opacity: 0;
@@ -115,7 +186,8 @@ body {
 #advanced {
     justify-content: center;
     color: var(--text-muted);
-    padding: 5px;
+    padding: 8px;
+    text-align: center;
 
     span {
         font-weight: normal;
@@ -124,8 +196,8 @@ body {
 
 .toggle-text {
     font-size: 16px;
-    font-weight: bold;
     white-space: wrap;
+    width: 100%;
     max-width: calc(100% - 76px);
     user-select: none;
 }

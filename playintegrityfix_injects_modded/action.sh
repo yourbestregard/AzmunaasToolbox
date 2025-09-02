@@ -22,11 +22,12 @@ sh $MODDIR/autopif.sh
 
 echo -e "$(date +%Y-%m-%d\ %H:%M:%S) Closing dialog in 5 seconds.."
 echo -e "$(date +%Y-%m-%d\ %H:%M:%S) (⁠*⁠＾⁠3⁠＾⁠)⁠/⁠～⁠♡ Happy Meets Strong Integrity!"
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) Are you not pass strong integrity? try changing the spoof settings (without reboot) in /data/adb/pif.prop"
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: True, Spoof Signature: False, Spoof Vending Sdk: False."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 2) Spoof Build: True, Spoof Props: True, Spoof Provider: True, Spoof Signature: True, Spoof Vending Sdk: False."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 3) Spoof Build: True, Spoof Props: True, Spoof Provider: True, Spoof Signature: True, Spoof Vending Sdk: True."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 4) Spoof Build: False, Spoof Props: False, Spoof Provider: False, Spoof Signature: False, Spoof Vending Sdk: False."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) Are you not pass strong integrity? try changing the spoof settings (without reboot) in /data/adb/pif.prop or via WebUI"
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: False, Spoof Signature: False, spoofVendingBuild: False, Spoof Vending Sdk: False, DEBUG=false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: False, Spoof Signature: False, spoofVendingBuild: True, Spoof Vending Sdk: False, DEBUG=false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: True, Spoof Signature: False, spoofVendingBuild: True, Spoof Vending Sdk: False, DEBUG=false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: True, Spoof Signature: True, spoofVendingBuild: True, Spoof Vending Sdk: False, DEBUG=false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: True, Spoof Signature: True, spoofVendingBuild: True, Spoof Vending Sdk: True, DEBUG=false."
 sleep 5
 sh $MODDIR/mod/redirect.sh
 

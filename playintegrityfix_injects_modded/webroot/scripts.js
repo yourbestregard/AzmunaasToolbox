@@ -4,32 +4,46 @@ let scriptOnly = false;
 let shellRunning = false;
 let initialPinchDistance = null;
 let currentFontSize = 14;
+let model = null, product = null;
 const MIN_FONT_SIZE = 8;
 const MAX_FONT_SIZE = 24;
 
-const spoofBuildToggle = document.getElementById('toggle-spoofBuild');
-const spoofProviderToggle = document.getElementById('toggle-spoofProvider');
-const spoofPropsToggle = document.getElementById('toggle-spoofProps');
-const spoofSignatureToggle = document.getElementById('toggle-spoofSignature');
-const spoofVendingSdkToggle = document.getElementById('toggle-sdk-vending');
 const spoofConfig = [
-    { container: "spoofBuild-toggle-container", toggle: spoofBuildToggle, type: 'spoofBuild' },
-    { container: "spoofProvider-toggle-container", toggle: spoofProviderToggle, type: 'spoofProvider' },
-    { container: "spoofProps-toggle-container", toggle: spoofPropsToggle, type: 'spoofProps' },
-    { container: "spoofSignature-toggle-container", toggle: spoofSignatureToggle, type: 'spoofSignature' },
-    { container: "sdk-vending-toggle-container", toggle: spoofVendingSdkToggle, type: 'spoofVendingSdk' }
+    'spoofBuild',
+    'spoofProvider',
+    'spoofProps',
+    'spoofSignature',
+    'spoofVendingBuild',
+    'spoofVendingSdk'
 ];
 
 // Apply button event listeners
 function applyButtonEventListeners() {
     const fetchButton = document.getElementById('fetch');
-    const scriptOnlyToggle = document.getElementById('script-only-toggle-container');
+    const viewButton = document.getElementById('view');
+    const scriptOnlyToggle = document.getElementById('script-only-container');
     const advanced = document.getElementById('advanced');
     const clearButton = document.querySelector('.clear-terminal');
     const terminal = document.querySelector('.output-terminal-content');
     const githubBtn = document.getElementById('github-btn');
 
     fetchButton.addEventListener('click', runAction);
+    viewButton.addEventListener('click', async () => {
+        const result = await exec(`
+            if [ -f /data/adb/pif.prop ]; then
+                cat /data/adb/pif.prop
+            else
+                cat /data/adb/modules/playintegrityfix/pif.prop
+            fi
+        `);
+        if (result.errno === 0) {
+            const lines = result.stdout.split('\n').filter(line => line.trim() !== '');
+            lines.forEach(line => appendToOutput(line));
+            appendToOutput("");
+        } else {
+            appendToOutput(`[!] Failed to read pif.prop: ${result.stderr}`, true);
+        }
+    });
 
     scriptOnlyToggle.addEventListener('click', async () => {
         await exec(`${scriptOnly ? 'rm -rf /data/adb/pif_script_only' : 'touch /data/adb/pif_script_only'} || true
@@ -47,7 +61,6 @@ function applyButtonEventListeners() {
             option.classList.add('advanced-show');
         });
         advanced.style.display = 'none';
-        refreshBorder();
     });
 
     clearButton.addEventListener('click', () => {
@@ -99,7 +112,7 @@ async function loadVersionFromModuleProp() {
     if (errno === 0) {
         versionElement.textContent = stdout.trim();
     } else {
-        appendToOutput("[!] Failed to read version from module.prop");
+        appendToOutput(`[!] Failed to read version from module.prop: ${stderr}`, true);
         console.error("Failed to read version from module.prop:", stderr);
     }
     checkDescription();
@@ -112,22 +125,32 @@ async function checkDescription() {
     if (typeof ksu !== 'undefined' && errno === 0) {
         unofficialOverlay.style.display = 'flex';
     }
+}
 */
 
 // Function to load spoof config
 async function loadSpoofConfig() {
     try {
-        const { errno, stdout, stderr } = await exec(`cat /data/adb/modules/playintegrityfix/pif.prop`);
+        
+        const { errno, stdout, stderr } = await exec(`
+            if [ -f /data/adb/pif.prop ]; then
+                cat /data/adb/pif.prop
+            else
+                cat /data/adb/modules/playintegrityfix/pif.prop
+            fi
+        `);
         if (errno !== 0) throw new Error(stderr);
 
-        const config = parsePropToMap(stdout);
-        spoofBuildToggle.checked = config.spoofBuild;
-        spoofProviderToggle.checked = config.spoofProvider;
-        spoofPropsToggle.checked = config.spoofProps;
-        spoofSignatureToggle.checked = config.spoofSignature;
-        spoofVendingSdkToggle.checked = config.spoofVendingSdk;
+        const pifMap = parsePropToMap(stdout);
+
+        spoofConfig.forEach(config => {
+            const toggle = document.getElementById(`${config}-toggle`);
+            toggle.checked = pifMap[config];
+        });
+
+        if (model === null) model = pifMap.MODEL;
     } catch (error) {
-        appendToOutput(`[!] Failed to load spoof config.`);
+        appendToOutput(`[!] Failed to load spoof config: ${error}`, true);
         appendToOutput('[!] Warning: Do not use third party tools to fetch pif.prop');
         resetPifProp();
         console.error(`Failed to load spoof config:`, error);
@@ -145,14 +168,14 @@ function resetPifProp() {
         })
         .then(async text => {
             const pifProp = text.trim();
-            const { errno } = await exec(`
+            const { errno, stderr } = await exec(`
                 echo '${pifProp}' > /data/adb/modules/playintegrityfix/pif.prop
                 rm -f /data/adb/pif.prop || true
             `);
             if (errno === 0) {
                 appendToOutput(`[+] Successfully reset pif.prop`);
             } else {
-                appendToOutput(`[!] Failed to reset pif.prop`);
+                appendToOutput(`[!] Failed to reset pif.prop: ${stderr}`, true);
             }
         })
         .catch(error => {
@@ -161,30 +184,35 @@ function resetPifProp() {
 }
 
 // Function to setup spoof config button
-function setupSpoofConfigButton(container, toggle, type) {
-    document.getElementById(container).addEventListener('click', async () => {
-        if (shellRunning) return;
-        muteToggle();
-        const { errno, stdout, stderr } = await exec(`
-            [ ! -f /data/adb/modules/playintegrityfix/pif.prop ] || echo "/data/adb/modules/playintegrityfix/pif.prop"
-            [ ! -f /data/adb/pif.prop ] || echo "/data/adb/pif.prop"
-        `);
-        if (errno === 0) {
-            const isSuccess = await updateSpoofConfig(toggle, type, stdout);
-            if (isSuccess) {
-                loadSpoofConfig();
-                appendToOutput(`[+] ${toggle.checked ? "Disabled" : "Enabled"} ${type}`);
-            } else {
-                appendToOutput(`[!] Failed to ${toggle.checked ? "disable" : "enable"} ${type}`);
-            }
-            await exec(`
-                killall com.google.android.gms.unstable || true
-                killall com.android.vending || true
+function setupSpoofConfigButton() {
+    spoofConfig.forEach(config => {
+        const container = config + "-container";
+        const toggle = document.getElementById(`${config}-toggle`);
+
+        document.getElementById(container).addEventListener('click', async () => {
+            if (shellRunning) return;
+            muteToggle();
+            const { errno, stdout, stderr } = await exec(`
+                [ ! -f /data/adb/modules/playintegrityfix/pif.prop ] || echo "/data/adb/modules/playintegrityfix/pif.prop"
+                [ ! -f /data/adb/pif.prop ] || echo "/data/adb/pif.prop"
             `);
-        } else {
-            console.error(`Failed to find pif.prop:`, stderr);
-        }
-        unmuteToggle();
+            if (errno === 0) {
+                const isSuccess = await updateSpoofConfig(toggle, config, stdout);
+                if (isSuccess) {
+                    loadSpoofConfig();
+                    appendToOutput(`[+] ${toggle.checked ? "Disabled" : "Enabled"} ${config}`);
+                } else {
+                    appendToOutput(`[!] Failed to ${toggle.checked ? "disable" : "enable"} ${config}`);
+                }
+                await exec(`
+                    killall com.google.android.gms.unstable || true
+                    killall com.android.vending || true
+                `);
+            } else {
+                console.error(`Failed to find pif.prop:`, stderr);
+            }
+            unmuteToggle();
+        });
     });
 }
 
@@ -212,6 +240,11 @@ async function updateSpoofConfig(toggle, type, pifFile) {
             // write
             const { errno } = await exec(`echo '${prop}' > ${pifFile}`);
             if (errno !== 0) isSuccess = false;
+
+            // reminder
+            if (config.spoofVendingBuild && config.spoofVendingSdk) {
+                appendToOutput('[!] spoofVendingSdk will not take effect when spoofVendingBuild is enabled.');
+            }
         } catch (error) {
             console.error(`Failed to update ${pifFile}:`, error);
             isSuccess = false;
@@ -221,7 +254,7 @@ async function updateSpoofConfig(toggle, type, pifFile) {
 }
 
 // Function to append element in output terminal
-function appendToOutput(content) {
+function appendToOutput(content, error = false) {
     const output = document.querySelector('.output-terminal-content');
     if (content.trim() === "") {
         const lineBreak = document.createElement('br');
@@ -230,6 +263,7 @@ function appendToOutput(content) {
         const line = document.createElement('p');
         line.className = 'output-content';
         line.innerHTML = content.replace(/ /g, '&nbsp;');
+        if (error) line.style.color = 'red';
         output.appendChild(line);
     }
     output.scrollTop = output.scrollHeight;
@@ -239,16 +273,17 @@ function appendToOutput(content) {
 function runAction() {
     if (shellRunning) return;
     muteToggle();
-    const args = ["/data/adb/modules/playintegrityfix/autopif.sh"];
-    const scriptOutput = spawn("sh", args);
+    let opts = {};
+    if (model && product) opts = { env: { MODEL: `"${model}"`, PRODUCT: `"${product}"`} };
+    const scriptOutput = spawn("sh", ["/data/adb/modules/playintegrityfix/autopif.sh"], opts);
     scriptOutput.stdout.on('data', (data) => appendToOutput(data));
-    scriptOutput.stderr.on('data', (data) => appendToOutput(data));
+    scriptOutput.stderr.on('data', (data) => appendToOutput(`[!] Error executing autopif.sh: ${data}`, true));
     scriptOutput.on('exit', () => {
         appendToOutput("");
         unmuteToggle();
     });
     scriptOutput.on('error', () => {
-        appendToOutput("[!] Error: Fail to execute autopif.sh");
+        appendToOutput("[!] Error: Fail to execute autopif.sh", true);
         appendToOutput("");
         unmuteToggle();
     });
@@ -258,12 +293,12 @@ function updateAutopif() {
     muteToggle();
     const scriptOutput = spawn("sh", ["/data/adb/modules/playintegrityfix/autopif_ota.sh"]);
     scriptOutput.stdout.on('data', (data) => appendToOutput(data));
-    scriptOutput.stderr.on('data', (data) => appendToOutput(data));
+    scriptOutput.stderr.on('data', (data) => appendToOutput(`[!] Error executing autopif_ota.sh: ${data}`, true));
     scriptOutput.on('exit', () => {
         unmuteToggle();
     });
     scriptOutput.on('error', () => {
-        appendToOutput("[!] Error: Fail to execute autopif_ota.sh");
+        appendToOutput("[!] Error: Fail to execute autopif_ota.sh", true);
         appendToOutput("");
         unmuteToggle();
     });
@@ -408,16 +443,104 @@ function loadScriptOnlyConfig() {
                 ) return;
                 toggle.style.display = scriptOnly ? 'none' : 'flex';
             });
-            document.getElementById('toggle-script-only').checked = scriptOnly;
-            refreshBorder();
+
+            const scriptOnlyContainer = document.getElementById('script-only-container');
+            scriptOnlyContainer.querySelector('input[type=checkbox]').checked = scriptOnly
+            scriptOnlyContainer.querySelector('.toggle').classList.toggle('last-toggle', scriptOnly);
+            scriptOnlyContainer.querySelector('.toggle').classList.toggle('first-toggle', scriptOnly);
         });
 }
 
-function refreshBorder() {
-    const lists = Array.from(document.querySelectorAll('.toggle-list'));
-    lists.forEach(list => list.style.borderBottom = '1px solid var(--border-color)');
-    const visibleLists = lists.filter(list => getComputedStyle(list).display !== 'none');
-    if (visibleLists.length > 0) visibleLists[visibleLists.length - 1].style.borderBottom = 'none';
+/**
+ * fetch available model and array, retrieve from localStorage if last updated less than 1 day
+ * @returns {Object} - An object contain an array of model and an array of product
+ */
+function getDeviceList() {
+    const cacheKey = 'PIF_devices_list';
+    const tsKey = 'PIF_devices_list_timestamp';
+    const oneDayMs = 24 * 60 * 60 * 1000;
+    const now = Date.now();
+    let cachedList = localStorage.getItem(cacheKey);
+    let cachedTs = localStorage.getItem(tsKey);
+
+    return new Promise((resolve) => {
+        if (cachedList && cachedTs && (now - parseInt(cachedTs, 10) < oneDayMs)) {
+            try {
+                resolve(JSON.parse(cachedList));
+                return;
+            } catch (e) {
+                // fallback to refresh if parse fails
+            }
+        }
+        let listJson = "";
+        const result = spawn('sh', ["/data/adb/modules/playintegrityfix/autopif.sh", "--list"]);
+        result.stdout.on('data', (data) => {
+            if (data.trim() === "" || data.startsWith('[')) return;
+            listJson += data.trim();
+        });
+        result.on('exit', () => {
+            if (listJson !== "") {
+                localStorage.setItem(cacheKey, listJson);
+                localStorage.setItem(tsKey, String(Date.now()));
+                try {
+                    resolve(JSON.parse(listJson));
+                } catch (e) {
+                    appendToOutput(`[!] Error parsing devices list: ${e}`, true);
+                    resolve(null);
+                }
+            } else {
+                resolve(null);
+            }
+        });
+    });
+}
+
+let selectorListener = false;
+
+// Render available device list to select menu
+function setupDeviceList() {
+    const selectMenu = document.getElementById('select-devices');
+
+    if (!selectorListener) {
+        selectMenu.addEventListener('change', () => {
+            if (selectMenu.value === 'refresh') {
+                localStorage.removeItem('PIF_devices_list');
+                localStorage.removeItem('PIF_devices_list_timestamp');
+                selectMenu.innerHTML = '<option value=loading>Loading</option>';
+                selectMenu.value = 'loading'
+                setupDeviceList();
+                return;
+            }
+
+            const selected = selectMenu.options[selectMenu.selectedIndex];
+            model = selected.value || null;
+            product = selected.getAttribute('data-product') || null;
+        });
+        selectorListener = true;
+    }
+
+    // Render device list
+    getDeviceList().then(deviceList => {
+        selectMenu.innerHTML = `
+            <option value="random">Random</option>
+            <option value="refresh">Refresh List</option>
+        `;
+
+        if (!deviceList || !deviceList.model || !deviceList.product) return;
+        for (let i = 0; i < deviceList.model.length; i++) {
+            const option = document.createElement('option');
+            option.value = deviceList.model[i];
+            option.textContent = deviceList.model[i];
+            option.setAttribute('data-product', deviceList.product[i] || '');
+            selectMenu.appendChild(option);
+        }
+
+        // Select previous model
+        if (model && deviceList.model.includes(model)) {
+            selectMenu.value = model;
+            selectMenu.dispatchEvent(new Event('change'));
+        }
+    });
 }
 
 function getDistance(touch1, touch2) {
@@ -437,10 +560,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     checkMMRL();
     loadVersionFromModuleProp();
     await loadSpoofConfig();
-    spoofConfig.forEach(config => {
-        setupSpoofConfigButton(config.container, config.toggle, config.type);
-    });
+    setupSpoofConfigButton();
     loadScriptOnlyConfig();
+    setupDeviceList();
     applyButtonEventListeners();
     applyRippleEffect();
     updateAutopif();

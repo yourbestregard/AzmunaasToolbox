@@ -31,6 +31,29 @@ set_random_beta() {
 	fi
 }
 
+get_model_product_list() {
+	printf "{\"model\":["
+	count=0
+	total=$(echo "$MODEL_LIST" | wc -l)
+	echo "$MODEL_LIST" | while read -r model; do
+		count=$((count + 1))
+		printf "\"%s\"" "$model"
+		[ $count -lt $total ] && printf ","
+	done
+	printf "],\"product\":["
+	count=0
+	total=$(echo "$PRODUCT_LIST" | wc -l)
+	echo "$PRODUCT_LIST" | while read -r product; do
+		count=$((count + 1))
+		printf "\"%s\"" "$product"
+		[ $count -lt $total ] && printf ","
+	done
+	printf "]}"
+
+	rm -rf "$TEMPDIR"
+	exit 0
+}
+
 # Get latest Pixel Beta information
 download https://developer.android.com/about/versions PIXEL_VERSIONS_HTML
 BETA_URL=$(grep -o 'https://developer.android.com/about/versions/.*[0-9]"' PIXEL_VERSIONS_HTML | sort -ru | cut -d\" -f1 | head -n1)
@@ -44,6 +67,11 @@ download "$OTA_URL" PIXEL_OTA_HTML
 MODEL_LIST="$(grep -A1 'tr id=' PIXEL_OTA_HTML | grep 'td' | sed 's;.*<td>\(.*\)</td>;\1;')"
 PRODUCT_LIST="$(grep -o 'tr id="[^"]*"' PIXEL_OTA_HTML | awk -F\" '{print $2 "_beta"}')"
 OTA_LIST="$(grep 'ota/.*_beta' PIXEL_OTA_HTML | cut -d\" -f2)"
+
+# List available devices
+if [ "$1" = "--list" ] || [ "$1" = "-l" ]; then
+	get_model_product_list
+fi
 
 # Select and configure device
 echo "- Selecting Pixel Beta device ..."
@@ -62,7 +90,7 @@ if [ -z "$FINGERPRINT" ] || [ -z "$SECURITY_PATCH" ]; then
 fi
 
 # Preserve previous setting
-spoofConfig="spoofBuild spoofProvider spoofProps spoofSignature DEBUG spoofVendingSdk"
+spoofConfig="spoofBuild spoofProps spoofProvider spoofSignature spoofVendingBuild spoofVendingSdk DEBUG"
 for config in $spoofConfig; do
 	if grep -q "$config=true" "$MODDIR/pif.prop"; then
 		eval "$config=true"
@@ -79,11 +107,12 @@ MANUFACTURER=Google
 MODEL=$MODEL
 SECURITY_PATCH=$SECURITY_PATCH
 spoofBuild=$spoofBuild
-spoofProvider=$spoofProvider
 spoofProps=$spoofProps
+spoofProvider=$spoofProvider
 spoofSignature=$spoofSignature
-DEBUG=$DEBUG
+spoofVendingBuild=$spoofVendingBuild
 spoofVendingSdk=$spoofVendingSdk
+DEBUG=$DEBUG
 EOF
 
 cat "$TEMPDIR/pif.prop" > /data/adb/pif.prop

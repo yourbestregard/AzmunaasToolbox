@@ -1,5 +1,4 @@
-# v1008
+# v1009
 
-- update to version CI #147
-- fix mod function
-- remove unofficial warning
+- update to version CI #160
+- adjust the spoof pif settings help
