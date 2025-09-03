@@ -23,11 +23,11 @@ sh $MODDIR/autopif.sh
 echo -e "$(date +%Y-%m-%d\ %H:%M:%S) Closing dialog in 5 seconds.."
 echo -e "$(date +%Y-%m-%d\ %H:%M:%S) (⁠*⁠＾⁠3⁠＾⁠)⁠/⁠～⁠♡ Happy Meets Strong Integrity!"
 echo -e "$(date +%Y-%m-%d\ %H:%M:%S) Are you not pass strong integrity? try changing the spoof settings (without reboot) in /data/adb/pif.prop or via WebUI"
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: False, Spoof Signature: False, spoofVendingBuild: False, Spoof Vending Sdk: False, DEBUG=false."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: False, Spoof Signature: False, spoofVendingBuild: True, Spoof Vending Sdk: False, DEBUG=false."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: True, Spoof Signature: False, spoofVendingBuild: True, Spoof Vending Sdk: False, DEBUG=false."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: True, Spoof Signature: True, spoofVendingBuild: True, Spoof Vending Sdk: False, DEBUG=false."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) Spoof Build: True, Spoof Props: True, Spoof Provider: True, Spoof Signature: True, spoofVendingBuild: True, Spoof Vending Sdk: True, DEBUG=false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) spoofBuild = true, spoofProps = true, spoofProvider = false, spoofSignature = false, spoofVendingBuild = false, spoofVendingSdk = false, DEBUG = false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 2) spoofBuild = true, spoofProps = true, spoofProvider = false, spoofSignature = false, spoofVendingBuild = true, spoofVendingSdk = false, DEBUG = false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 3) spoofBuild = true, spoofProps = true, spoofProvider = true, spoofSignature = false, spoofVendingBuild = true, spoofVendingSdk = false, DEBUG = false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 4) spoofBuild = true, spoofProps = true, spoofProvider = true, spoofSignature = true, spoofVendingBuild = true, spoofVendingSdk = false, DEBUG = false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 5) spoofBuild = true, spoofProps = true, spoofProvider = true, spoofSignature = true, spoofVendingBuild = true, spoofVendingSdk = true, DEBUG = false."
 sleep 5
 sh $MODDIR/mod/redirect.sh
 
