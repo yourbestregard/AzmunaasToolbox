@@ -1,7 +1,7 @@
 #!/system/bin/sh
 
 # Lokasi File dan URL
-MOD_DIR="/data/adb/playintegrityfix"
+MOD_DIR="/data/adb/modules/playintegrityfix"
 LOCAL_VERSION_FILE="$MOD_DIR/mod/versioncode.txt"
 UPDATE_VERSION_FILE="https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/playintegrityfix_injects_update.json"
 
