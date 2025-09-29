@@ -13,7 +13,7 @@ until [ -z "$1" ]; do
   case "$1" in
     -h|--help|help) echo "sh autopif2.sh [-a|-s] [-m] [-t #] [-d #]"; exit 0;;
     -a|--advanced|advanced) ARGS="-a"; shift;;
-    -s|--strong|strong) ARGS="-a"; PATCH_COMMENT=1; spoofProvider=0; shift;;
+    -s|--strong|strong) FORCE_STRONG=1; shift;;
     -m|--match|match) FORCE_MATCH=1; shift;;
     -t|--top|top) echo "$2" | grep -q '^[1-9]$' || exit 1; FORCE_TOP=$2; shift 2;;
     -d|--depth|depth) echo "$2" | grep -q '^[1-9]$' || exit 1; FORCE_DEPTH=$2; shift 2;;
@@ -154,15 +154,23 @@ if [ -f "$MIGRATE" ]; then
   if [ -f "$OLDJSON" ]; then
     grep -q '//"\*.security_patch"' $OLDJSON && PATCH_COMMENT=1;
     grep -qE "verboseLogs|VERBOSE_LOGS" $OLDJSON && ARGS="-a";
+  else
+    FORCE_STRONG=1;
   fi;
-  [ -f /data/adb/tricky_store/security_patch.txt ] && unset PATCH_COMMENT;
+  if [ "$FORCE_STRONG" ]; then
+    item "Forcing configuration for <A13 PI Strong ...";
+    ARGS="-a"; PATCH_COMMENT=1; spoofProvider=0;
+  else
+    item "Retaining existing configuration ...";
+  fi;
+  [ -d /data/adb/tricky_store ] && unset PATCH_COMMENT;
   item "Converting pif.json to custom.pif.json with migrate.sh:";
   rm -f custom.pif.json;
   sh $MIGRATE -i $ARGS pif.json;
   if [ -n "$ARGS" ]; then
     grep_json() { [ -f "$2" ] && grep -m1 "$1" $2 | cut -d\" -f4; }
     verboseLogs=$(grep_json "VERBOSE_LOGS" $OLDJSON);
-    ADVSETTINGS="spoofBuild spoofProps spoofProvider spoofSignature spoofVendingFingerprint spoofVendingSdk verboseLogs";
+    ADVSETTINGS="spoofBuild spoofProps spoofProvider spoofSignature spoofVendingFinger spoofVendingSdk verboseLogs";
     for SETTING in $ADVSETTINGS; do
       eval [ -z \"\$$SETTING\" ] \&\& $SETTING=$(grep_json "$SETTING" $OLDJSON);
       eval TMPVAL=\$$SETTING;
@@ -186,9 +194,11 @@ if [ "$DIR" = /data/adb/modules/playintegrityfix/autopif2 ]; then
   fi;
   item "Installing new json ...";
   cp -fv $NEWNAME ..;
-  TS_SECPAT=/data/adb/tricky_store/security_patch.txt;
-  if [ -f "$TS_SECPAT" ]; then
+  TS_DIR=/data/adb/tricky_store;
+  if [ -d "$TS_DIR" ]; then
     item "Updating Tricky Store security_patch.txt ...";
+    TS_SECPAT=$TS_DIR/security_patch.txt;
+    touch $TS_SECPAT;
     [ -s "$TS_SECPAT" ] || echo "all=" > $TS_SECPAT;
     grep -qE '^[0-9]{8}$' $TS_SECPAT && sed -i "s/^.*$/${SECURITY_PATCH//-}/" $TS_SECPAT;
     grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' $TS_SECPAT && sed -i "s/^.*$/$SECURITY_PATCH/" $TS_SECPAT;

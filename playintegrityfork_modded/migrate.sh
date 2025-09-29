@@ -114,13 +114,13 @@ if [ -z "$DEVICE_INITIAL_SDK_INT" -o "$DEVICE_INITIAL_SDK_INT" = "null" ]; then
   DEVICE_INITIAL_SDK_INT=25;
 fi;
 
-ADVSETTINGS="spoofBuild spoofProps spoofProvider spoofSignature spoofVendingFingerprint spoofVendingSdk verboseLogs";
+ADVSETTINGS="spoofBuild spoofProps spoofProvider spoofSignature spoofVendingFinger spoofVendingSdk verboseLogs";
 
 spoofBuild=1;
 spoofProps=1;
 spoofProvider=1;
 spoofSignature=0;
-spoofVendingFingerprint=0;
+spoofVendingFinger=0;
 spoofVendingSdk=0;
 verboseLogs=0;
 
