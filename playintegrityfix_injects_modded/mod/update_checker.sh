@@ -75,7 +75,7 @@ esac
 
 # Ambil informasi versi terbaru dari remote
 log_message "Retrieving the latest version information from the server..."
-VERSION_LATEST=$(download "$REMOTE_VERSION_URL" -)
+VERSION_LATEST=$(download "$UPDATE_VERSION_FILE" -)
 DOWNLOAD_STATUS=$?
 
 if [ "$DOWNLOAD_STATUS" -ne 0 ] || [ -z "$VERSION_LATEST" ]; then
