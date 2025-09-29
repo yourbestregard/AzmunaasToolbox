@@ -1,6 +1,3 @@
-# v1011
+# v1012
 
-- update to version CI  #173
-- improve mod program
-- new update method
-- improve anti-tamper detection
+- fix new update method

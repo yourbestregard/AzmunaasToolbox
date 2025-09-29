@@ -129,6 +129,8 @@ if [ "$VERSION_LATEST" -gt "$VERSION_INSTALLED" ]; then
         # Perbarui file versi lokal ke versi yang baru
         echo "$VERSION_LATEST" > "$LOCAL_VERSION_FILE"
         log_message "Local version has been updated to $VERSION_LATEST."
+        log_message "Creating update flag for the root manager..."
+        touch "$MOD_DIR/update"
     else
         log_message "ERROR: Failed to extract zip file."
     fi
