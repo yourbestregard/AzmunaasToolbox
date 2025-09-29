@@ -333,7 +333,6 @@ input:checked+.slider:before {
     box-sizing: border-box;
 }
 
-/*
 .warning-content {
     background-color: #870F0F;
     color: white;
@@ -342,9 +341,7 @@ input:checked+.slider:before {
         margin: 0;
     }
 }
-*/
 
-/*
 .warning-button {
     border: none;
     border-radius: 12px;
@@ -355,7 +352,6 @@ input:checked+.slider:before {
     background-color: #5C5C5C;
     color: white;
 }
-*/
 
 .ripple-element {
     position: relative;

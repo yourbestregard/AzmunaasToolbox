@@ -1,5 +1,25 @@
 MODDIR="/data/adb/modules/playintegrityfix"
 
+sh $MODDIR/mod/set_target.sh 2>&1
+sh $MODDIR/mod/set_security_patch.sh 2>&1
+sh $MODDIR/mod/install_keybox.sh 2>&1
+sh $MODDIR/mod/kill_gms_process.sh 2>&1
+sh $MODDIR/mod/update_checker.sh 2>&1
+sh $MODDIR/autopif_ota.sh || true
+sh $MODDIR/autopif.sh
+
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) Closing dialog in 5 seconds.."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) (⁠*⁠＾⁠3⁠＾⁠)⁠/⁠～⁠♡ Happy Meets Strong Integrity!"
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) Are you not pass strong integrity? try changing the spoof settings (without reboot) in /data/adb/pif.prop or via WebUI"
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) spoofBuild = true, spoofProps = true, spoofProvider = false, spoofSignature = false, spoofVendingBuild = false, spoofVendingSdk = false, DEBUG = false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 2) spoofBuild = true, spoofProps = true, spoofProvider = false, spoofSignature = false, spoofVendingBuild = true, spoofVendingSdk = false, DEBUG = false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 3) spoofBuild = true, spoofProps = true, spoofProvider = false, spoofSignature = true, spoofVendingBuild = true, spoofVendingSdk = false, DEBUG = false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 4) spoofBuild = true, spoofProps = true, spoofProvider = true, spoofSignature = false, spoofVendingBuild = true, spoofVendingSdk = false, DEBUG = false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 5) spoofBuild = true, spoofProps = true, spoofProvider = true, spoofSignature = true, spoofVendingBuild = true, spoofVendingSdk = false, DEBUG = false."
+echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 6) spoofBuild = true, spoofProps = true, spoofProvider = true, spoofSignature = true, spoofVendingBuild = true, spoofVendingSdk = true, DEBUG = false."
+sleep 5
+sh $MODDIR/mod/redirect.sh 2>&1
+
 if [ -z "$MMRL" ] && [ ! -z "$MAGISKTMP" ]; then
     pm path io.github.a13e300.ksuwebui > /dev/null 2>&1 && {
         echo "- Launching WebUI in KSUWebUIStandalone..."
@@ -12,22 +32,4 @@ if [ -z "$MMRL" ] && [ ! -z "$MAGISKTMP" ]; then
         exit 0
     }
 fi
-
-sh $MODDIR/mod/set_target.sh
-sh $MODDIR/mod/set_security_patch.sh
-sh $MODDIR/mod/install_keybox.sh
-sh $MODDIR/mod/kill_gms_process.sh
-sh $MODDIR/autopif_ota.sh || true
-sh $MODDIR/autopif.sh
-
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) Closing dialog in 5 seconds.."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) (⁠*⁠＾⁠3⁠＾⁠)⁠/⁠～⁠♡ Happy Meets Strong Integrity!"
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) Are you not pass strong integrity? try changing the spoof settings (without reboot) in /data/adb/pif.prop or via WebUI"
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 1) spoofBuild = true, spoofProps = true, spoofProvider = false, spoofSignature = false, spoofVendingBuild = false, spoofVendingSdk = false, DEBUG = false."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 2) spoofBuild = true, spoofProps = true, spoofProvider = false, spoofSignature = false, spoofVendingBuild = true, spoofVendingSdk = false, DEBUG = false."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 3) spoofBuild = true, spoofProps = true, spoofProvider = true, spoofSignature = false, spoofVendingBuild = true, spoofVendingSdk = false, DEBUG = false."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 4) spoofBuild = true, spoofProps = true, spoofProvider = true, spoofSignature = true, spoofVendingBuild = true, spoofVendingSdk = false, DEBUG = false."
-echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 5) spoofBuild = true, spoofProps = true, spoofProvider = true, spoofSignature = true, spoofVendingBuild = true, spoofVendingSdk = true, DEBUG = false."
-sleep 5
-sh $MODDIR/mod/redirect.sh
 

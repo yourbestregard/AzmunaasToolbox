@@ -1,7 +1,7 @@
 id=playintegrityfix
-name=Play Integrity Fix Inject-S Modded
-version=v4.3-injects-MODDED-v1010
-versionCode=1010
-author=yourbestregard, KOWX712, chiteroman.
-description=A modified version for my personal use. Simply install the following modules: Zygisk, TrickyStore, and this module. Then press the action button once.
-updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/playintegrityfix_injects_update.json
+name=Play Integrity Fix [INJECT]
+version=v4.3-inject-s
+versionCode=43
+author=chiteroman, KOWX712
+description=Universal modular fix for Play Integrity on devices running Android 8-16
+updateJson=https://raw.githubusercontent.com/KOWX712/PlayIntegrityFix/inject_s/update.json
