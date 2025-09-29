@@ -3,7 +3,7 @@
 # Lokasi File dan URL
 MOD_DIR="/data/adb/modules/playintegrityfix"
 LOCAL_VERSION_FILE="$MOD_DIR/mod/versioncode.txt"
-UPDATE_VERSION_FILE="https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/playintegrityfix_injects_update.json"
+UPDATE_VERSION_FILE="https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/playintegrityfix_injects_update.txt"
 
 DOWNLOAD_DIR="$MOD_DIR/tmp"
 DOWNLOAD_FILE="$DOWNLOAD_DIR/update.zip"
@@ -73,21 +73,23 @@ case $VERSION_INSTALLED in
     ''|*[!0-9]*) VERSION_INSTALLED="0" ;;
 esac
 
-# Ambil informasi versi terbaru dari remote JSON
+# Ambil informasi versi terbaru dari remote
 log_message "Retrieving the latest version information from the server..."
-JSON_CONTENT=$(download "$UPDATE_VERSION_FILE" -)
-if [ $? -ne 0 ] || [ -z "$JSON_CONTENT" ]; then
-    log_message "ERROR: Failed to download the update JSON file. Canceling."
+VERSION_LATEST=$(download "$REMOTE_VERSION_URL" -)
+DOWNLOAD_STATUS=$?
+
+if [ "$DOWNLOAD_STATUS" -ne 0 ] || [ -z "$VERSION_LATEST" ]; then
+    log_message "ERROR: Failed to download version file. Canceling."
     exit 1
 fi
 
-# Ekstrak VERSION_CODE_LATEST dari konten JSON menggunakan grep
-VERSION_LATEST=$(echo "$JSON_CONTENT" | grep -o '"VERSION_CODE_LATEST": *"[0-9]*"' | grep -o '[0-9]*')
-
-if [ -z "$VERSION_LATEST" ]; then
-    log_message "ERROR: Failed to extract VERSION_CODE_LATEST from JSON. Canceling."
-    exit 1
-fi
+# Validasi bahwa konten yang diunduh adalah angka
+case $VERSION_LATEST in
+    ''|*[!0-9]*)
+        log_message "ERROR: The content from the server is not a valid number. There may be a network error or a file error."
+        exit 1
+        ;;
+esac
 
 log_message "Installed Version: $VERSION_INSTALLED"
 log_message "New Version:    $VERSION_LATEST"
