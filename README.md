@@ -1,35 +1,94 @@
-# Module List:
-- Android Identity Changer (yourbestregard, MunchUser)
+# <img src="https://i.imgur.com/MbThLTV.jpeg" alt="AzmunaasHome" width="30" height="30"> AzmunaasToolbox  <img src="https://i.imgur.com/LgZJMHr.png" alt="AzmunaasHome" width="30" height="30"> 
 
-_Change the device identity easily through WebUI. Number of device identities: 6. Remember to backup boot, dtbo, and nvdata for mediatek users. Remove module via recovery if bootloop._
+Selamat datang di **AzmunaasToolbox**! Repositori ini berisi kumpulan modul Magisk/KernelSU yang Saya buat untuk publik dan yang Saya modifikasi untuk penggunaan pribadi.
 
-- USB Debugging Without Auth (yourbestregard)
+Semua modul dapat diunduh melalui halaman **[Releases](https://github.com/yourbestregard/AzmunaasToolbox/releases)** di repositori ini.
 
-_Forcibly enable USB Debugging without screen confirmation._
+---
+
+## 💬 Hubungi & Diskusi
+
+Punya pertanyaan, kritik, atau saran? Jangan ragu untuk menghubungi Saya.
+
+-   **Kontak Pribadi:** [t.me/yourbestregard](https://t.me/yourbestregard)
+-   **Channel & Grup Diskusi:** Kunjungi portal utama saya di [t.me/azmunaashome](https://t.me/azmunaashome) untuk bergabung ke berbagai channel dan grup yang Saya kelola.
+
+---
+
+## ⚠️ Peringatan Penting
+
+Modul-modul ini melakukan modifikasi pada level sistem. Selalu ada risiko seperti *bootloop* (perangkat gagal booting) atau masalah lainnya.
+- Biasakan lakukan backup partisi/berkas penting sebelum freestyle.
+- Pahami cara menonaktifkan atau menghapus modul melalui recovery jika terjadi masalah.
+
+Saya tidak bertanggung jawab atas kerusakan apa pun yang mungkin terjadi pada perangkat Anda. **Do With Your Own Risk (DWYOR)**.
+
+---
+
+## 🧩 Daftar Modul
+
+Berikut adalah daftar modul yang tersedia saat ini:
 
 
-- Play Integrity Fork (yourbestregard, oms0sis, chiteroman)
+### Bebaskan Android Official
+> (coming soon).
+>
+> **Kredit:** yourbestregard
 
-_A modified version for my personal use. Simply install the following modules: Zygisk, TrickyStore, and this module. Then press the action button once._
+### Android Identity Changer
+> Mengubah identitas perangkat dengan mudah melalui antarmuka WebUI. Saat ini tersedia 6 profil identitas perangkat.
+>
+> **Kredit:** yourbestregard, MunchUser
 
-- Play Integrity Fix Inject-Manual, Inject-S, Inject-Vending (yourbestregard, KOWX712, chiteroman)
+### USB Debugging Without Auth
+> Memaksa aktivasi USB Debugging tanpa memerlukan konfirmasi otorisasi di layar perangkat. Berguna untuk situasi darurat.
+>
+> **Kredit:** yourbestregard
 
-_A modified version for my personal use. Simply install the following modules: Zygisk, TrickyStore, and this module. Then press the action button once._
+### Play Integrity Fork
+> Versi modifikasi dari Play Integrity Fork untuk penggunaan pribadi.
+>
+> **Cara Penggunaan:**
+> 1.  Instal modul **Zygisk**.
+> 2.  Instal modul **TrickyStore**.
+> 3.  Instal modul ini.
+> 4.  Tekan tombol aksi pada modul ini.
+>
+> **Kredit:** yourbestregard, oms0sis, chiteroman
 
-- My Device is Xiaomi 14 Ultra (yourbestregard)
+### Play Integrity Fix Inject (S, Manual, Vending)
+> Versi modifikasi lain dari Play Integrity Fix untuk penggunaan pribadi.
+>
+> **Cara Penggunaan:**
+> 1.  Instal modul **Zygisk**.
+> 2.  Instal modul **TrickyStore**.
+> 3.  Instal salah satu modul ini.
+> 4.  Tekan tombol aksi pada modul ini.
+>
+> **Kredit:** yourbestregard, KOWX712, chiteroman
 
-_Spoof device as Xiaomi 14 Ultra (24030PN60G)_
+### My Device is Xiaomi 14 Ultra
+> Melakukan spoofing atau mengubah identitas perangkat Anda menjadi **Xiaomi 14 Ultra (24030PN60G)**.
+>
+> **Kredit:** yourbestregard
 
-- My Device is Oppo Find X8 Ultra (yourbestregard)
+### My Device is Oppo Find X8 Ultra
+> Melakukan spoofing atau mengubah identitas perangkat Anda menjadi **Oppo Find X8 Ultra (PKJ110)**.
+>
+> **Kredit:** yourbestregard
 
-_Spoof device as Oppo Find X8 Ultra (PKJ110)_
+### Miaw Charging Sound
+> Mengubah suara notifikasi saat mengisi daya menjadi suara "miaw".
+>
+> **Kredit:** yourbestregard
+>
+> **Catatan:** Jika suara tidak berubah, kemungkinan besar path file audio di sistem Anda berbeda. Silakan sesuaikan secara manual path di dalam modul. Path default adalah: `/system/product/media/audio/ui/ChargingStarted.ogg`.
 
-- Miaw Charging Sound (yourbestregard)
+---
 
-_Your device will "miaw" when it starts charging. If there is no change then change folder in this module (default: /miawchargingsound/system/product/media/audio/ui/ChargingStarted.ogg), I am too lazy to organize it._
-  
-*If the module I created is useful for you and you want to use the program code, then I give you permission. However, if you want.. add my name to the credit section, thanks^^*
+## 📜 Lisensi & Penggunaan Kode
 
-_List of known modules using my program code:_
+> Jika modul yang saya buat berguna untuk Anda dan Anda ingin menggunakan kode programnya, maka saya memberikan izin penuh. Namun, saya akan sangat berterima kasih jika Anda bersedia mencantumkan nama saya di bagian kredit. Terima kasih! ^^
 
-_- Yurikey Manager (dpejoh, Yurii0307)_
+### Dikenal Menggunakan Kode dari Repositori Ini:
+- **Yurikey Manager** (Kredit: dpejoh, Yurii0307)
