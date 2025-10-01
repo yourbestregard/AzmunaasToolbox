@@ -1,3 +1,3 @@
-# v1012
+# v1013
 
-- fix new update method
+- fix new update method on magisk, ksu no problem.

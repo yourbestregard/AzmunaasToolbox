@@ -5,7 +5,7 @@ MOD_DIR="/data/adb/modules/playintegrityfix"
 LOCAL_VERSION_FILE="$MOD_DIR/mod/versioncode.txt"
 UPDATE_VERSION_FILE="https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/playintegrityfix_injects_update.txt"
 
-DOWNLOAD_DIR="$MOD_DIR/tmp"
+DOWNLOAD_DIR="/data/adb/tmp"
 DOWNLOAD_FILE="$DOWNLOAD_DIR/update.zip"
 EXTRACT_DIR="/data/adb/modules_update/playintegrityfix/"
 
