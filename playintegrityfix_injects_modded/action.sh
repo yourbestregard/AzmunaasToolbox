@@ -33,3 +33,5 @@ if [ -z "$MMRL" ] && [ ! -z "$MAGISKTMP" ]; then
     }
 fi
 
+sh $MODDIR/autopif_ota.sh || true
+sh $MODDIR/autopif.sh

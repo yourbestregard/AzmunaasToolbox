@@ -1,3 +1,3 @@
-# v1013
+# v1014
 
-- fix new update method on magisk, ksu no problem.
+- fix crazy anti tamper detection
