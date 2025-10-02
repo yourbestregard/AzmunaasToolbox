@@ -5,10 +5,10 @@ set +o standalone
 unset ASH_STANDALONE
 
 # Panggil sub-skrip dan alihkan stdout dan stderr ke proses ini
-sh $MODPATH/mod/set_target.sh 2>&1
-sh $MODPATH/mod/install_keybox.sh 2>&1
-# sh $MODPATH/mod/set_security_patch.sh 2>&1
-# sh $MODPATH/mod/kill_gms_process.sh 2>&1
+su -c "sh $MODDIR/mod/set_target.sh 2>&1"
+su -c "sh $MODDIR/mod/install_keybox.sh 2>&1"
+# su -c "sh $MODDIR/mod/set_security_patch.sh 2>&1"
+# su -c "sh $MODDIR/mod/kill_gms_process.sh 2>&1"
 
 # Jalankan autopif2 seperti biasa
 sh $MODPATH/autopif2.sh -s -m -p || exit 1
@@ -24,4 +24,4 @@ echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 4) spoofBuild: 1, spoofProps: 1, spoofProvi
 echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 5) spoofBuild: 1, spoofProps: 1, spoofProvider: 1, spoofSignature: 1, spoofVendingFinger: 1, spoofVendingSdk: 0, verboseLogs=0."
 echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 6) spoofBuild: 1, spoofProps: 1, spoofProvider: 1, spoofSignature: 1, spoofVendingFinger: 1, spoofVendingSdk: 1, verboseLogs=0."
 sleep 5
-sh $MODPATH/mod/redirect.sh 2>&1
+su -c "sh $MODDIR/mod/redirect.sh 2>&1"
