@@ -1,7 +1,7 @@
 #!/system/bin-sh
 
 # Lokasi File dan URL
-LOCAL_VERSION_FILE="/data/adb/playintegrityfix/mod/versioncode.txt"
+LOCAL_VERSION_FILE="/data/adb/modules/playintegrityfix/mod/versioncode.txt"
 REMOTE_VERSION_URL="https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/playintegrityfix_injects_update.txt"
 
 # Lokasi folder Download di memori internal (/storage/emulated/0/Download)
