@@ -75,7 +75,9 @@ fi
 
 # Select and configure device
 echo "- Selecting Pixel Beta device ..."
-[ -z "$PRODUCT" ] && set_random_beta
+if [ -z "$PRODUCT" ] || ! echo "$PRODUCT_LIST" | grep -q "$PRODUCT"; then
+	set_random_beta
+fi
 echo "$MODEL ($PRODUCT)"
 
 # Get device fingerprint and security patch from OTA metadata
@@ -123,6 +125,10 @@ EOF
 cat "$TEMPDIR/pif.prop" > /data/adb/pif.prop
 echo ""
 echo "- new pif.prop saved to /data/adb/pif.prop"
+
+if [ -e "/data/adb/tricky_store/pif_auto_security_patch" ]; then
+	sh "$MODDIR/security_patch.sh"
+fi
 
 echo "- Cleaning up ..."
 rm -rf "$TEMPDIR"
