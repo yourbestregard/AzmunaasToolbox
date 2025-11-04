@@ -1,6 +1,7 @@
 MODDIR="/data/adb/modules/playintegrityfix"
 
 su -c "sh $MODDIR/mod/set_target.sh 2>&1"
+su -c "sh $MODDIR/mod/set_security_patch.sh 2>&1"
 su -c "sh $MODDIR/mod/install_keybox.sh 2>&1"
 su -c "sh $MODDIR/mod/kill_gms_process.sh 2>&1"
 su -c "sh $MODDIR/mod/update_checker.sh 2>&1"
