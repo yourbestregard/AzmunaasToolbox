@@ -19,4 +19,4 @@ echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 4) spoofBuild: 1, spoofProps: 1, spoofProvi
 echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 5) spoofBuild: 1, spoofProps: 1, spoofProvider: 1, spoofSignature: 1, spoofVendingFinger: 1, spoofVendingSdk: 0, verboseLogs=0."
 echo -e "$(date +%Y-%m-%d\ %H:%M:%S) 6) spoofBuild: 1, spoofProps: 1, spoofProvider: 1, spoofSignature: 1, spoofVendingFinger: 1, spoofVendingSdk: 1, verboseLogs=0."
 sleep 5
-sh $MODDIR/mod/redirect.sh 2>&1
+sh $MODPATH/mod/redirect.sh 2>&1
