@@ -1,4 +1,3 @@
-# v1017
+# v1018
 
-- updated and adjusted based on the latest release version.
-- bring back auto set security patch.
+- updated and adjusted based on the latest CI version.
