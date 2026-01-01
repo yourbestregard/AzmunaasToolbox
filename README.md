@@ -25,15 +25,20 @@ Saya tidak bertanggung jawab atas kerusakan apa pun yang mungkin terjadi pada pe
 
 ---
 
-## 🧩 Daftar Modul
+## 🧩 Daftar Modul AxManager (Without ROOT)
 
 Berikut adalah daftar modul yang tersedia saat ini:
 
-
-### Bebaskan Android Official
-> (coming soon).
->
+### AxTweakBox
+> coming soon.
+> 
 > **Kredit:** yourbestregard
+
+---
+
+## 🧩 Daftar Modul ROOT
+
+Berikut adalah daftar modul yang tersedia saat ini:
 
 ### Android Identity Changer
 > Mengubah identitas perangkat dengan mudah melalui antarmuka WebUI. Saat ini tersedia 6 profil identitas perangkat.

@@ -21,10 +21,8 @@ log_message "Creating new target list with special packages..."
     echo "android"
     echo "com.android.vending!"
     echo "com.google.android.gms!"
-    echo "com.reveny.nativecheck!"
     echo "io.github.vvb2060.keyattestation!"
     echo "io.github.vvb2060.mahoshojo"
-    echo "icu.nullptr.nativetest"
 } > "$t"
 
 # Fungsi untuk menambahkan paket ke daftar
