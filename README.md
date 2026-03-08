@@ -25,17 +25,6 @@ Saya tidak bertanggung jawab atas kerusakan apa pun yang mungkin terjadi pada pe
 
 ---
 
-## 🧩 Daftar Modul AxManager (Without ROOT)
-
-Berikut adalah daftar modul yang tersedia saat ini:
-
-### AxTweakBox
-> coming soon.
-> 
-> **Kredit:** yourbestregard
-
----
-
 ## 🧩 Daftar Modul ROOT
 
 Berikut adalah daftar modul yang tersedia saat ini:
