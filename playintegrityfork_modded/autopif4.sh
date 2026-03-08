@@ -79,8 +79,8 @@ item "Crawling Android Developers for latest Pixel Beta device list ...";
 wget -q -O PIXEL_VERSIONS_HTML --no-check-certificate "https://developer.android.com/about/versions" 2>&1 || exit 1;
 wget -q -O PIXEL_LATEST_HTML --no-check-certificate "$(grep -o 'https://developer.android.com/about/versions/.*[0-9]"' PIXEL_VERSIONS_HTML | sort -ru | cut -d\" -f1 | head -n1 | tail -n1)" 2>&1 || exit 1;
 wget -q -O PIXEL_FI_HTML --no-check-certificate "https://developer.android.com$(grep -o 'href=".*download.*"' PIXEL_LATEST_HTML | grep 'qpr' | cut -d\" -f2 | head -n1 | tail -n1)" 2>&1 || exit 1;
-MODEL_LIST="$(grep -A1 'tr id=' PIXEL_FI_HTML | grep 'td' | sed 's;.*<td>\(.*\)</td>;\1;')";
-PRODUCT_LIST="$(grep 'tr id=' PIXEL_FI_HTML | sed 's;.*<tr id="\(.*\)">;\1_beta;')";
+MODEL_LIST="$(grep -A1 'tr id=' PIXEL_FI_HTML | grep 'td' | sed 's;.*<td>\(.*\)</td>.*;\1;')";
+PRODUCT_LIST="$(grep 'tr id=' PIXEL_FI_HTML | sed 's;.*<tr id="\(.*\)">.*;\1_beta;')";
 echo "$PRODUCT_LIST" | wc -w;
 
 if [ "$FORCE_MATCH" ]; then
@@ -130,6 +130,9 @@ EOF
 else
   warn "Failed to extract Factory Image URL from JSON";
 fi;
+if [ ! -s PIXEL_ZIP_HEADERS ] || ! grep -q 'Last-Modified' PIXEL_ZIP_HEADERS; then
+  wget -q -S --spider -o PIXEL_ZIP_HEADERS --no-check-certificate "$FI" 2>&1;
+fi;
 if [ -f PIXEL_ZIP_HEADERS ] && grep -q 'Last-Modified' PIXEL_ZIP_HEADERS; then
   CANARY_REL_DATE="$(date -D '%a, %d %b %Y %H:%M:%S %Z' -d "$(grep -o 'Last-Modified.*' PIXEL_ZIP_HEADERS | cut -d\  -f2-)" '+%Y-%m-%d')";
   CANARY_EXP_DATE="$(date -D '%s' -d "$(($(date -D '%Y-%m-%d' -d "$CANARY_REL_DATE" '+%s') + 60 * 60 * 24 * 7 * 6))" '+%Y-%m-%d')";
@@ -146,6 +149,11 @@ CANARY_ID="$(grep '"id"' PIXEL_CANARY_JSON | sed -e 's;.*canary-\(.*\)".*;\1;' -
 [ -z "$CANARY_ID" ] && die "Failed to extract build info from JSON";
 wget -q -O PIXEL_SECBULL_HTML --no-check-certificate "https://source.android.com/docs/security/bulletin/pixel" 2>&1 || exit 1;
 SECURITY_PATCH="$(grep "<td>$CANARY_ID" PIXEL_SECBULL_HTML | sed 's;.*<td>\(.*\)</td>;\1;')";
+if [ -z "$SECURITY_PATCH" ]; then
+  warn "Failed to determine exact security patch level from Pixel Update Bulletins";
+  item "Assuming probable security patch level from Canary build info ...";
+  SECURITY_PATCH="${CANARY_ID}-05";
+fi;
 echo "$SECURITY_PATCH";
 
 item "Dumping values to minimal pif.prop ...";
@@ -224,24 +232,26 @@ if [ "$DIR" = /data/adb/modules/playintegrityfix/autopif4 ]; then
     TS_SECPAT=$TS_DIR/security_patch.txt;
     touch $TS_SECPAT;
     if [ -f /data/adb/modules/tricky_store/libTEESimulator.so ]; then
-        item "Updating TEESimulator security_patch.txt ...";
-        if [ ! -s "$TS_SECPAT" ]; then
-            cat <<EOF > $TS_SECPAT;
+      item "Updating TEESimulator security_patch.txt ...";
+      if [ ! -s "$TS_SECPAT" ]; then
+        cat <<EOF > $TS_SECPAT;
 all=
 
 [com.google.android.gms]
 system=no
 EOF
-        fi;
+      fi;
     else
-        item "Updating Tricky Store security_patch.txt ...";
-        [ -s "$TS_SECPAT" ] || echo "all=" > $TS_SECPAT;
-        grep -qE '^[0-9]{8}$' $TS_SECPAT && sed -i "s/^.*$/${SECURITY_PATCH//-}/" $TS_SECPAT;
-        grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' $TS_SECPAT && sed -i "s/^.*$/$SECURITY_PATCH/" $TS_SECPAT;
+      item "Updating Tricky Store security_patch.txt ...";
+      [ -s "$TS_SECPAT" ] || echo "all=" > $TS_SECPAT;
+      grep -qE '^[0-9]{8}$' $TS_SECPAT && sed -i "s/^.*$/${SECURITY_PATCH//-}/" $TS_SECPAT;
+      grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' $TS_SECPAT && sed -i "s/^.*$/$SECURITY_PATCH/" $TS_SECPAT;
     fi;
-    grep -q 'all=' $TS_SECPAT && sed -i "s/all=.*/all=$SECURITY_PATCH/" $TS_SECPAT;
+    if ! grep -q 'all=device_default' $TS_SECPAT; then
+      grep -q 'all=' $TS_SECPAT && sed -i "s/all=.*/all=$SECURITY_PATCH/" $TS_SECPAT;
+    fi;
     if ! grep -q 'system=no' $TS_SECPAT; then
-        grep -q 'system=' $TS_SECPAT && sed -i "s/system=.*/system=$(echo ${SECURITY_PATCH//-} | cut -c-6)/" $TS_SECPAT;
+      grep -q 'system=' $TS_SECPAT && sed -i "s/system=.*/system=$(echo ${SECURITY_PATCH//-} | cut -c-6)/" $TS_SECPAT;
     fi;
     sed -i '$a\' $TS_SECPAT;
     cat $TS_SECPAT;
