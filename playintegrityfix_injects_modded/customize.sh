@@ -77,9 +77,6 @@ if [ -f "/data/adb/modules/playintegrityfix/system.prop" ]; then
     cp -af /data/adb/modules/playintegrityfix/system.prop "$MODPATH/system.prop"
 fi
 
-# Restore previous settings
-[ -f "/data/adb/modules/playintegrityfix/uninstall.sh" ] && cp -af /data/adb/modules/playintegrityfix/uninstall.sh "$MODPATH/uninstall.sh"
-
 # Check custom fingerprint
 if [ -f "/data/adb/pif.prop" ]; then
     ui_print "- Backup custom pif.prop"
@@ -89,3 +86,13 @@ fi
 # give exec perm to autopif.sh
 chmod +x "$MODPATH/autopif.sh"
 chmod +x "$MODPATH/autopif_ota.sh"
+
+# Clean up
+for pkg in com.google.android.gms com.android.vending; do
+    for dir in "/data/user_de/0/$pkg" "/data/data/$pkg"; do
+        [ -d "$dir" ] || continue
+        for artifact in libinject.so classes.dex pif.prop; do
+            [ -f "$dir/$artifact" ] && rm -f "$dir/$artifact"
+        done
+    done
+done
