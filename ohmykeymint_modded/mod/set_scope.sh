@@ -1,6 +1,12 @@
 #!/bin/sh
 
 INJECTOR='/data/misc/keystore/omk/injector.toml'
+TMP_DIR='/data/local/tmp'
+
+RAW_LIST="$TMP_DIR/omk_raw_pkgs.txt"
+UNIQUE_LIST="$TMP_DIR/omk_unique_pkgs.txt"
+FORMATTED_SCOOP="$TMP_DIR/omk_formatted_scoop.txt"
+TMP_INJECTOR="$TMP_DIR/injector.toml.tmp"
 
 # Fungsi untuk mencatat pesan dengan timestamp
 log_message() {
@@ -15,60 +21,62 @@ if [ ! -f "$INJECTOR" ]; then
     exit 1
 fi
 
-# Membuat temporary file di memory untuk menyimpan raw list paket
-TMP_LIST=$(mktemp)
-
+# Mengumpulkan semua paket khusus dan aplikasi sistem/pengguna
 log_message "Adding custom package to the list..."
 {
+    echo "io.github.vvb2060.keyattestation"
     echo "com.google.android.gsf"
     echo "com.google.android.gms"
     echo "com.android.vending"
-    echo "io.github.vvb2060.keyattestation"
-    echo "io.github.vvb2060.mahoshojo"
-    echo "# Add more packages here if needed"
-} > "$TMP_LIST"
+    echo "com.eltavine.duckdetector"
+} > "$RAW_LIST"
 
+## Mengambil semua paket aplikasi di perangkat
 log_message "Retrieving the entire list of applications..."
-pm list packages | cut -d ":" -f 2 >> "$TMP_LIST"
+pm list packages | cut -d ":" -f 2 >> "$RAW_LIST"
 
-log_message "Formatting the list into a multiline array..."
-# Format: 2 spasi awal, tanda kutip ganda, string paket, koma, baris baru
-FORMATTED_SCOOP=$(sort -u "$TMP_LIST" | awk '{printf "  \"%s\",\n", $0}')
+# Sortir dan hapus duplikasi paket
+sort -u "$RAW_LIST" > "$UNIQUE_LIST"
 
-# Hapus temporary file
-rm "$TMP_LIST"
+# Format menjadi baris array TOML
+: > "$FORMATTED_SCOOP"
+while read -r pkg; do
+    if [ -n "$pkg" ]; then
+        echo "  \"$pkg\"," >> "$FORMATTED_SCOOP"
+    fi
+done < "$UNIQUE_LIST"
 
-log_message "Injecting configuration into $INJECTOR..."
+# Memproses dan menyisipkan data ke injector.toml
+log_message "Injecting the configuration into $INJECTOR..."
+in_scoop=0
+: > "$TMP_INJECTOR"
 
-# Menggunakan awk untuk menimpa blok multiline
-awk -v new_data="$FORMATTED_SCOOP" '
-/^scoop = \[/ {
-    # Jika menemukan baris pembuka array, cetak pembuka baru
-    print "scoop = ["
-    # Cetak semua daftar aplikasi yang sudah diformat
-    printf "%s", new_data
-    # Cetak penutup array baru
-    print "]"
-    # Aktifkan flag penanda bahwa kita sedang berada di dalam blok array lama
-    in_scoop = 1
-    next
-}
-in_scoop == 1 && /\]/ {
-    # Jika menemukan kurung tutup array lama, matikan flag
-    in_scoop = 0
-    next
-}
-in_scoop == 1 { 
-    # Abaikan/hapus isi paket dari array lama
-    next 
-}
-{ 
-    # Cetak sisa konfigurasi di luar blok scoop secara normal
-    print 
-}
-' "$INJECTOR" > "${INJECTOR}.tmp"
+while IFS= read -r line || [ -n "$line" ]; do
+    # Jika berada di dalam blok scoop lama, abaikan barisnya hingga bertemu ']'
+    if [ "$in_scoop" -eq 1 ]; then
+        if echo "$line" | grep -q "]"; then
+            in_scoop=0
+        fi
+        continue
+    fi
 
-# Timpa file asli dengan file hasil modifikasi
-mv "${INJECTOR}.tmp" "$INJECTOR"
+    # Jika menemukan baris pembuka 'scoop = ['
+    if echo "$line" | grep -q "^scoop = \["; then
+        echo "scoop = [" >> "$TMP_INJECTOR"
+        cat "$FORMATTED_SCOOP" >> "$TMP_INJECTOR"
+        echo "]" >> "$TMP_INJECTOR"
+        in_scoop=1
+        continue
+    fi
 
-log_message "Finished setting up the scope."
+    # Salin baris lain di luar blok scoop
+    echo "$line" >> "$TMP_INJECTOR"
+done < "$INJECTOR"
+
+# Mengembalikan data ke injector.toml asli
+cat "$TMP_INJECTOR" > "$INJECTOR"
+
+# Bersihkan file temporary di /data/local/tmp
+rm -f "$RAW_LIST" "$UNIQUE_LIST" "$FORMATTED_SCOOP" "$TMP_INJECTOR"
+
+log_message "Finished setting the scope."
