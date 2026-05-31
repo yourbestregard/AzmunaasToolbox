@@ -4,4 +4,4 @@ version=1.1.1-ef38a44
 versionCode=80
 author=James Clef, yourbestregard
 description=Custom keystore implementation for Android Keystore Spoofer, modified version for personal use.
-updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/ohmykeymint_update.json.json
+updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/ohmykeymint_update.json
