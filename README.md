@@ -29,14 +29,13 @@ Saya tidak bertanggung jawab atas kerusakan apa pun yang mungkin terjadi pada pe
 
 Berikut adalah daftar modul yang tersedia saat ini:
 
-### OhMyKeymint Addon
-> Modul pelengkap untuk OhMyKeymint agar penggunaan modul ini lebih ramah amatir.
+### OhMyKeymint Modded
+> Versi modifikasi dari OhMyKeymint untuk penggunaan pribadi. Ditambahkan skrip agar lebih ramah amatir.
 >
 > **Cara Penggunaan:**
-> 1.  Instal modul OhMyKeymint.
-> 2.  Instal modul OhMyKeymint Addon.
-> 3.  Mulai ulang perangkat.
-> 4.  Tekan tombol aksi pada modul OhMyKeymint.
+> 1.  Instal modul ini.
+> 2.  Mulai ulang perangkat.
+> 3.  Tekan tombol aksi pada modul ini.
 >
 > **Kredit:** yourbestregard, qwq233/James Clef.
 
