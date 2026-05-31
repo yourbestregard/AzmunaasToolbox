@@ -29,37 +29,25 @@ Saya tidak bertanggung jawab atas kerusakan apa pun yang mungkin terjadi pada pe
 
 Berikut adalah daftar modul yang tersedia saat ini:
 
-### Android Identity Changer
-> Mengubah identitas perangkat dengan mudah melalui antarmuka WebUI. Saat ini tersedia 6 profil identitas perangkat.
+### OhMyKeymint Modded
+> Versi modifikasi dari OhMyKeymint untuk penggunaan pribadi. Ditambahkan skrip agar lebih ramah amatir.
 >
-> **Kredit:** yourbestregard, MunchUser
+> **Cara Penggunaan:**
+> 1.  Instal modul ini.
+> 2.  Mulai ulang perangkat.
+> 3.  Tekan tombol aksi pada modul ini.
+>
+> **Kredit:** yourbestregard, qwq233/James Clef.
 
 ### USB Debugging Without Auth
 > Memaksa aktivasi USB Debugging tanpa memerlukan konfirmasi otorisasi di layar perangkat. Berguna untuk situasi darurat.
 >
 > **Kredit:** yourbestregard
 
-### Play Integrity Fork
-> Versi modifikasi dari Play Integrity Fork untuk penggunaan pribadi.
+### Android Identity Changer
+> Mengubah identitas perangkat dengan mudah melalui antarmuka WebUI. Saat ini tersedia 6 profil identitas perangkat.
 >
-> **Cara Penggunaan:**
-> 1.  Instal modul **Zygisk**.
-> 2.  Instal modul **TrickyStore**.
-> 3.  Instal modul ini.
-> 4.  Tekan tombol aksi pada modul ini.
->
-> **Kredit:** yourbestregard, oms0sis, chiteroman
-
-### Play Integrity Fix Inject (S, Manual, Vending)
-> Versi modifikasi lain dari Play Integrity Fix untuk penggunaan pribadi.
->
-> **Cara Penggunaan:**
-> 1.  Instal modul **Zygisk**.
-> 2.  Instal modul **TrickyStore**.
-> 3.  Instal salah satu modul ini.
-> 4.  Tekan tombol aksi pada modul ini.
->
-> **Kredit:** yourbestregard, KOWX712, chiteroman
+> **Kredit:** yourbestregard, MunchUser
 
 ### My Device is Xiaomi 14 Ultra
 > Melakukan spoofing atau mengubah identitas perangkat Anda menjadi **Xiaomi 14 Ultra (24030PN60G)**.
