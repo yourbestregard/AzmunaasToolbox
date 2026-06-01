@@ -1,3 +1,3 @@
 ## What's new?
 
-First release
+Improved mod logic
