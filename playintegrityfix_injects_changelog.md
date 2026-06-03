@@ -1,3 +1,3 @@
-# What's new? (1022)
+# What's new? (1023)
 
-- There are a few changes to the mod, but the core remains the same.
+- Bring back the Auto Set Security Patch mod.
