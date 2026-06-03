@@ -1,23 +1,19 @@
 #!/system/bin/sh
 
-# Directory and file locations
-KEYBOX_DIR="/data/adb/tricky_store"
-KEYBOX_FILE="$KEYBOX_DIR/keybox.xml"
-KEYBOX_BACKUP_FILE="$KEYBOX_DIR/keybox_backup.xml"
+# Directory list, target URL, and Temporary Download Location
+TARGET_DIRS="/data/adb/tricky_store"
 KEYBOX_URL="https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/config.xml"
+TMP_KEYBOX="/data/local/tmp/new_keybox_tmp.xml"
 
 # Function to record logs with timestamp format
 log_message() {
-    # Print logs to Magisk/KernelSU/Apatch logs
     echo "$(date +'%Y-%m-%d %H:%M:%S') [INSTALL_KEYBOX] $1"
 }
 
 # Function to find a working BusyBox executable
 find_busybox() {
-    # Jika variabel BUSYBOX sudah ada, tidak perlu mencari lagi
     [ -n "$BUSYBOX" ] && return 0
     
-    # Mencari BusyBox di path umum modul root
     local path
     for path in \
         /data/adb/modules/busybox-ndk/system/bin/busybox \
@@ -42,75 +38,87 @@ download() {
     local url="$1"
     local outfile="$2"
     
-    # Coba gunakan curl jika ada
     if command -v curl >/dev/null 2>&1; then
         log_message "Using curl to download..."
         curl -sL "$url" -o "$outfile"
         return $?
     fi
     
-    # Coba gunakan wget jika ada
     if command -v wget >/dev/null 2>&1; then
         log_message "Using wget to download..."
         wget -qO "$outfile" "$url"
         return $?
     fi
     
-    # Cari dan gunakan BusyBox jika curl/wget standar gagal
     if find_busybox; then
         log_message "Using BusyBox wget to download..."
         "$BUSYBOX" wget -qO "$outfile" "$url"
         return $?
     fi
     
-    # Jika semua metode gagal
     return 127 # Command not found
 }
 
-# Backup existing keyboxes if found
-if [ -f "$KEYBOX_FILE" ]; then
-    log_message "Keybox.xml already exists, backing it up..."
-    # Move existing files into backup files
-    mv "$KEYBOX_FILE" "$KEYBOX_BACKUP_FILE"
-    if [ $? -eq 0 ]; then
-        log_message "Backup successful."
-    else
-        log_message "ERROR: Failed to backup keybox.xml. Aborting modification."
-        # Sebaiknya tidak keluar, agar logika fallback tetap bisa berjalan
-    fi
-fi
+log_message "======================================="
+log_message "Starting keybox update process..."
 
-# Try downloading the new keybox using the new download function
-log_message "Processing keybox from URL..."
-download "$KEYBOX_URL" "$KEYBOX_FILE"
+# Donglod
+log_message "Downloading new keybox from URL to temporary location..."
+download "$KEYBOX_URL" "$TMP_KEYBOX"
 DOWNLOAD_EXIT_CODE=$?
 
-# Verify download results and apply fallback logic
-if [ "$DOWNLOAD_EXIT_CODE" -eq 0 ] && [ -f "$KEYBOX_FILE" ] && [ -s "$KEYBOX_FILE" ]; then
-    log_message "Keybox downloaded and verified successfully."
-    chmod 0644 "$KEYBOX_FILE"
-    log_message "Keybox permission set to 0644."
+# Verifikasi apakah unduhan berhasil dan berkas tidak kosong (-s)
+if [ "$DOWNLOAD_EXIT_CODE" -eq 0 ] && [ -f "$TMP_KEYBOX" ] && [ -s "$TMP_KEYBOX" ]; then
+    log_message "New keybox downloaded and verified successfully."
+
+    # Eksekusi
+    for KEYBOX_DIR in $TARGET_DIRS; do
+        log_message "---------------------------------------"
+        log_message "Processing directory: $KEYBOX_DIR"
+        
+        KEYBOX_FILE="$KEYBOX_DIR/keybox.xml"
+        KEYBOX_BACKUP_FILE="$KEYBOX_DIR/keybox_backup.xml"
+
+        # Buat direktori jika belum ada
+        if [ ! -d "$KEYBOX_DIR" ]; then
+            log_message "Creating directory $KEYBOX_DIR..."
+            mkdir -p "$KEYBOX_DIR"
+        fi
+
+        # Backup
+        if [ -f "$KEYBOX_FILE" ]; then
+            log_message "Backing up existing keybox.xml..."
+            # Menggunakan 'cat' untuk menyalin agar terhindar dari masalah permission/SELinux
+            cat "$KEYBOX_FILE" > "$KEYBOX_BACKUP_FILE"
+            log_message "Backup created at $KEYBOX_BACKUP_FILE."
+        else
+            # Jika sebelumnya file asli tidak ada, buat file kosong dulu
+            touch "$KEYBOX_FILE"
+        fi
+
+        # Ganti isi keybox asli dengan isi dari keybox baru
+        log_message "Injecting new keybox content into $KEYBOX_FILE..."
+        cat "$TMP_KEYBOX" > "$KEYBOX_FILE"
+        chmod 0644 "$KEYBOX_FILE"
+        log_message "Keybox updated and permissions set to 0644."
+    done
+
+    # Bebersih
+    log_message "---------------------------------------"
+    log_message "Cleaning up temporary downloaded keybox..."
+    rm -f "$TMP_KEYBOX"
+    log_message "All keybox updates completed successfully."
+
 else
-    # Jika GAGAL, berikan pesan error yang sesuai dan jalankan logika fallback
+    # Elol
     log_message "ERROR: Failed to download or verify new keybox from URL."
     
     if [ "$DOWNLOAD_EXIT_CODE" -eq 127 ]; then
         log_message "Reason: curl, wget, or a working BusyBox was not found."
         log_message "Please install a BusyBox module to fix this. Recommended: https://github.com/Magisk-Modules-Repo/busybox-ndk"
     else
-        log_message "Reason: Download command failed with exit code $DOWNLOAD_EXIT_CODE."
+        log_message "Reason: Download command failed with exit code $DOWNLOAD_EXIT_CODE or file is empty."
     fi
     
-    # Check if any backup files can be restored
-    if [ -f "$KEYBOX_BACKUP_FILE" ]; then
-        log_message "Attempting to restore from backup..."
-        mv "$KEYBOX_BACKUP_FILE" "$KEYBOX_FILE"
-        if [ $? -eq 0 ]; then
-            log_message "Backup keybox restored successfully."
-        else
-            log_message "CRITICAL: Failed to restore backup keybox. Module might not work."
-        fi
-    else
-        log_message "CRITICAL: Download failed and no backup file was found."
-    fi
+    log_message "CRITICAL: Update aborted. Existing keybox files were not touched and are still working normally."
 fi

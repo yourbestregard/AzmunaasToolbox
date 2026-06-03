@@ -46,8 +46,8 @@ case $VERSION_INSTALLED in ''|*[!0-9]*) VERSION_INSTALLED="0" ;; esac
 # Ambil versi terbaru dari server
 log_message "Retrieving the latest version information from the server..."
 VERSION_LATEST=$(download "$REMOTE_VERSION_URL" -); DOWNLOAD_STATUS=$?
-if [ "$DOWNLOAD_STATUS" -ne 0 ] || [ -z "$VERSION_LATEST" ]; then log_message "ERROR: Gagal mengunduh file versi. Batal."; exit 1; fi
-case $VERSION_LATEST in ''|*[!0-9]*) log_message "ERROR: Konten dari server bukan angka yang valid."; exit 1 ;; esac
+if [ "$DOWNLOAD_STATUS" -ne 0 ] || [ -z "$VERSION_LATEST" ]; then log_message "ERROR: Failed to download the version file. Cancel."; exit 1; fi
+case $VERSION_LATEST in ''|*[!0-9]*) log_message "ERROR: Content from the server is not a valid number."; exit 1 ;; esac
 
 log_message "Installed Version: $VERSION_INSTALLED"
 log_message "Latest Version:    $VERSION_LATEST"

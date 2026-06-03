@@ -1,3 +1,3 @@
-# v1021
+# What's new? (1022)
 
-- updated and adjusted based on the latest CI version.
+- There are a few changes to the mod, but the core remains the same.
