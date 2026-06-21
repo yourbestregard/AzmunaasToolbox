@@ -1,3 +1,3 @@
-# What's new? (1023)
+# What's new? (1024)
 
-- Bring back the Auto Set Security Patch mod.
+- - update to latest release version.
