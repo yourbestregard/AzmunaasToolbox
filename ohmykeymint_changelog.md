@@ -1,3 +1,3 @@
 ## What's new?
 
-Improved mod logic (again)
+Update to latest version of original module (1.2.0-67dc5e7)

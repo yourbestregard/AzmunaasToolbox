@@ -1,7 +1,7 @@
 id=oh_my_keymint
 name=Oh My Keymint Modded
-version=1.1.1-ef38a44
-versionCode=82
+version=1.2.0-67dc5e7
+versionCode=96
 author=James Clef, yourbestregard
 description=Custom keystore implementation for Android Keystore Spoofer, modified version for personal use.
 updateJson=https://raw.githubusercontent.com/yourbestregard/AzmunaasToolbox/refs/heads/WebUIX/ohmykeymint_update.json

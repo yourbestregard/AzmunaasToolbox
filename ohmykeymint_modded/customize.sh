@@ -48,7 +48,7 @@ else
 fi
 
 chmod 755 "$MODPATH/daemon" "$MODPATH/daemon-injector" \
-  "$MODPATH/post-fs-data.sh" "$MODPATH/service.sh" 
+  "$MODPATH/post-fs-data.sh" "$MODPATH/service.sh"
 
 if [ "$ARCH" = "x64" ] || [ "$ARCH" = "x86_64" ]; then
   ui_print "- Using packaged x64 binaries"
@@ -70,18 +70,9 @@ chmod 755 "$BINDIR/keymint" "$BINDIR/inject"
 
 CONFIG_DIR=/data/adb/omk
 mkdir -p "$CONFIG_DIR"
-rm -f "$CONFIG_DIR/restart.keymint" "$CONFIG_DIR/restart.injector" "$CONFIG_DIR/restart.all" \
-  "$CONFIG_DIR/restart.all.keymint" "$CONFIG_DIR/restart.all.injector"
-if command -v resetprop >/dev/null 2>&1; then
-  resetprop persist.sys.omk.restart.keymint ""
-  resetprop persist.sys.omk.restart.injector ""
-  resetprop persist.sys.omk.restart.all ""
-elif command -v ksud >/dev/null 2>&1; then
-  ksud resetprop persist.sys.omk.restart.keymint ""
-  ksud resetprop persist.sys.omk.restart.injector ""
-  ksud resetprop persist.sys.omk.restart.all ""
-fi
+rm -f "$CONFIG_DIR/restart.keymint" "$CONFIG_DIR/restart.injector" "$CONFIG_DIR/restart.all"
+rm -f "$CONFIG_DIR/keymint" "$CONFIG_DIR/inject" "$CONFIG_DIR/injector" # clean up old hot-update binaries
 
-if [ -f "$CONFIG_DIR/omkdata" ]; then
+if [ ! -f "$CONFIG_DIR/omkdata" ]; then
   ln -s /data/misc/keystore/omk "$CONFIG_DIR/omkdata"
 fi
