@@ -1,18 +1,26 @@
 # Oh My Keymint
 
+[![Telegram](https://img.shields.io/static/v1?label=Telegram&message=@OhMyKeymint&color=0088cc)](https://t.me/OhMyKeymint)  [![CI Build](https://github.com/qwq233/OhMyKeymint/actions/workflows/ci.yml/badge.svg)](https://github.com/qwq233/OhMyKeymint/actions/workflows/ci.yml)
+
 Custom keystore implementation for Android Keystore Spoofer
 
 ## What is this?
 
 This is a complete implementation of the keystore, which fully implements the AOSP AIDL interface, referencing the official AOSP implementation.
 
-In theory, this would make it harder for detectors to identify behavior inconsistent with AOSP, thus achieving greater stealth than the FOSS branch of TrickyStore.
+In theory, this would make it harder for detectors to identify behavior inconsistent with AOSP, thus achieving greater stealth than the FOSS branch of TrickyStore or other TrickyStore-based module like TEESimulator.
 
 ## Install and configure
+
+**Android 12 or above required.**
 
 1. Install this module.
 
 2. Configure (if you need)
+
+3. Replace template keybox.xml (if you need)
+
+The keybox file should be a **valid** XML file with both EC and RSA chain, which means there should be no extra content in it like watermark or invisible characters.
 
 Configuration file is located at `/data/misc/keystore/omk/config.toml` and `/data/misc/keystore/omk/injector.toml`
 
@@ -20,9 +28,9 @@ Configuration file is located at `/data/misc/keystore/omk/config.toml` and `/dat
 
 ```toml
 [main]
-# Accepted values: "injector" or "omk".
+# Only "injector" is currently enabled.
 backend = "injector"
-# Insecure fallback for broken system TEE biometric HAT verification.
+# Insecure fallback for broken system TEE HAT verification.
 force_skip_system_biometric_hat_verification = false
 
 # The following values ​​are used to generate the seed for device encryption 
@@ -38,7 +46,7 @@ shared_secret_nonce = "884ae5e90744bc1c590c4a9959a9c11d1989a9f2b7cc31a50a31c9fc4
 # auth_token_hmac_key = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 
 [trust]
-os_version = 15
+os_version = 17
 # Accepted values:
 # - "auto": read and preserve the original build.prop patch level
 # - "latest": use the 5th day of the current month
@@ -87,10 +95,6 @@ file to `config.toml.bak`, and appends the parse error to the backup.
 
 ```toml
 # Only packages listed in `scoop` are intercepted.
-# Optional per-package settings can be added under [scoop.<package>].
-# Example:
-# [scoop.io.github.vvb2060.keyattestation]
-# mode = "strict"
 
 scoop = [
   "io.github.vvb2060.keyattestation",
@@ -146,8 +150,6 @@ original boot properties.
 
 Changing `[trust].security_patch` does not require a restart by itself. OMK hot-applies
 the new value and rebuilds the active KeyMint wrappers in place.
-
-The daemons also watch these marker files if you prefer the file-based path:
 
 ## License
 
