@@ -29,27 +29,6 @@ Saya tidak bertanggung jawab atas kerusakan apa pun yang mungkin terjadi pada pe
 
 Berikut adalah daftar modul yang tersedia saat ini:
 
-### OhMyKeymint Modded
-> Versi modifikasi dari OhMyKeymint untuk penggunaan pribadi. Ditambahkan skrip agar lebih ramah amatir.
->
-> **Cara Penggunaan:**
-> 1.  Instal modul ini.
-> 2.  Mulai ulang perangkat.
-> 3.  Tekan tombol aksi pada modul ini.
->
-> **Kredit:** yourbestregard, qwq233/James Clef.
-
-### Play Integrity Fix Inject-S
-> Versi modifikasi lain dari Play Integrity Fix untuk penggunaan pribadi.
->
-> **Cara Penggunaan:**
-> 1.  Instal modul **Neo Zygisk** atau varian zygisk lain.
-> 2.  Instal modul **TEESimulator-RS** atau varian lain.
-> 3.  Instal modul ini.
-> 4.  Tekan tombol aksi pada modul ini.
->
-> **Kredit:** yourbestregard, KOWX712, chiteroman
-
 ### USB Debugging Without Auth
 > Memaksa aktivasi USB Debugging tanpa memerlukan konfirmasi otorisasi di layar perangkat. Berguna untuk situasi darurat.
 >
